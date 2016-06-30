@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="../../css/my.css">
+        <style type="text/css">
+            .bc-head{background-color: #2A89FF;}
+            .bc-bg{background-color: #fff;}
+            .umh5{background-color: #F2F2F2;}
+            input{padding-left: 0.5em !important;}
+            .inputAll{top: 0.4em;margin: 0 0.4em 0.4em;}
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <div class="uba bc-border inputAll">
+            <div class="ub ub-ac ubb umh5 bc-border ">
+                <div class=" uinput ub ub-f1">
+                    <input placeholder="请输入最小录制时长,默认1" type="text" class="ub-f1" id="minDuration">
+                </div>
+            </div>
+            <div class="ub ub-ac umh5 bc-border ">
+                <div class=" uinput ub ub-f1">
+                    <input placeholder="请输入最大录制时长，默认20" type="text" class="umw4 ub-f1" id="maxDuration">
+                </div>
+            </div>
+        </div>
+        <div class="uinn" id="submit">
+            <div class="btn ub ub-ac bc-text-head ub-pc bc-head uc-a1"  id="submit">
+                <!-- <div class="uinn3 fa fa-shield umh1 umw1"></div> -->
+                确定
+            </div>
+        </div>
+        <script src="../../js/jquery.1.7.2.min.js"></script>
+        <script src="../../js/jquery.event.ue.js.js"></script>
+        <script src="../../js/jquery.udraggable.js"></script>
+        <script>
+            var jq = $.noConflict();
+        </script>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+         <script src="../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("index","1")
+            //appcan.initBounce();
+            // var params = {
+                // minDuration : 1,
+                // maxDuration : 5
+            // }
+            // uexQupai.config(JSON.stringify(params));
+        })
+        appcan.button("#submit", "ani-act", function() {
+            var minDuration = $("#minDuration").val();
+            var maxDuration = $("#maxDuration").val();
+            appcan.locStorage.setVal('minDuration',minDuration);
+            appcan.locStorage.setVal('maxDuration',maxDuration);
+            appcan.window.open("qupai","qupai.html",6);
+            //uexQupai.config(JSON.stringify(params));
+        })
+
+    </script>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            .line1{top: 0;}
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+    </body>
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.remove("index");
+        });
+         var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : false,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "基本地图功能",
+            id : "1"
+        }, {
+            title : "地图操作功能",
+            id : "2"
+        }, {
+            title : "UI控制功能",
+            id : "3"
+        }, {
+            title : "覆盖物功能",
+            id : "4"
+        }, {
+            title : "位置功能",
+            id : "5"
+        }, {
+            title : "地理编码",
+            id : "6"
+        }, {
+            title : "POI搜索",
+            id : "7"
+        }, {
+            title : "路径规划",
+            id : "8"
+        }, {
+            title : "获取距离",
+            id : "9"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            switch(obj.id) {
+            case "1":
+                appcan.window.open("uexBaiduMap_base_content","uexBaiduMap_base_content.html",2)
+                break;
+            case "2":
+                appcan.window.open("uexBaiduMap_base_zoom","uexBaiduMap_base_zoom.html",2)
+                break;
+            case "3":
+                appcan.window.open("uexBaiduMap_base_control","uexBaiduMap_base_control.html",2)
+                break;
+            case "4":
+                appcan.window.open("uexBaiduMap_base_overlay","uexBaiduMap_base_overlay.html",2)
+                break;
+            case "5":
+                appcan.window.open("uexBaiduMap_base_loc","uexBaiduMap_base_loc.html",2)
+                break;
+            case "6":
+                appcan.window.open("uexBaiduMap_base_geo","uexBaiduMap_base_geo.html",2)
+                break;
+            case "7":
+                appcan.window.open("uexBaiduMap_base_poi","uexBaiduMap_base_poi.html",2)
+                break;
+            case "8":
+               appcan.window.open("uexBaiduMap_base_plan","uexBaiduMap_base_plan.html",2)
+                break;
+            case "9":
+               appcan.window.open("uexBaiduMap_base_distance","uexBaiduMap_base_distance.html",2)
+                break;
+            }
+        })
+    </script>
+</html>

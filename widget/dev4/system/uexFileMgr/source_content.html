@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/themes/pastie.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            .bc-bg {
+                background-color: #fff;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <pre><code data-language="javascript">var cText = 0;
+var cJson = 1;
+var cInt = 2;
+var path ="wgt://data/test.txt";
+
+function createFile() {
+    var ret = uexFileMgr.createFile('1', path);
+    alert(ret);
+}
+
+function createDir() {
+    var path = "wgt://data/test2/";
+    var ret = uexFileMgr.createDir('20', path);
+    alert(ret);
+}
+
+function writeFile() {
+    uexFileMgr.openFile('1', path, '1');
+    uexFileMgr.writeFile('1', 0, "test",function(ret){
+        alert(ret);
+    });
+    uexFileMgr.closeFile('1');
+}
+
+function readFile() {
+    uexFileMgr.openFile('1', path, '1');
+    uexFileMgr.readFile('1', -1,0,function(data){
+        alert(data);
+    });
+    uexFileMgr.closeFile('1');
+}
+
+function isFileExistByPath(){
+    uexFileMgr.createFile('2', path);
+    var ret = uexFileMgr.isFileExistByPath("2",path);
+    alert(ret);
+}
+
+function isFileExistByID() {
+    uexFileMgr.createFile('2', path);
+    uexFileMgr.isFileExistByID('2');
+    uexFileMgr.closeFile('2');
+}
+
+function deleteFileByPath(){
+    var ret = uexFileMgr.deleteFileByPath(path);
+    alert(ret);
+}
+
+function deleteFileById() {
+    var ret = uexFileMgr.deleteFileByID(1);
+    alert(ret);
+}
+
+function getFileTypeByPath(){
+    var ret = uexFileMgr.getFileTypeByPath(path);
+    alert(ret);
+}
+
+function getFileTypeByID() {
+    uexFileMgr.createFile('4', path);
+    var ret = uexFileMgr.getFileTypeByID('4');
+    alert(ret);
+    uexFileMgr.closeFile('4');
+}
+
+function seekFile() {
+    uexFileMgr.openFile('1', path, '1');
+    var ret = uexFileMgr.seekFile('1', '1');
+    alert(ret);
+    uexFileMgr.closeFile('1');
+}
+
+function seekBeginOfFile() {
+    uexFileMgr.openFile('1', path, '1');
+    var ret = uexFileMgr.seekFile('1', '1');
+    alert(ret);
+    uexFileMgr.closeFile('1');
+}
+
+function seekEndOfFile() {
+    uexFileMgr.openFile('1', path, '1');
+    var ret = uexFileMgr.seekEndOfFile('1');
+    alert(ret);
+    uexFileMgr.closeFile('1');
+}
+
+function getFileSize() {
+    uexFileMgr.openFile('1', path, '1');
+    var size = uexFileMgr.getFileSize('1');
+    alert(size);
+    uexFileMgr.closeFile('1');
+}
+
+function getFileSizeByPath(){
+    var params = {
+        id:1,
+        path:"wgt://",
+        unit:"KB"
+    }
+    var data = JSON.stringify(params);
+    uexFileMgr.getFileSizeByPath(data,function(info){
+        if(info.errorCode == 0){
+            alert(info.data);
+        }else{
+            alert("ERROR!");
+        }
+    });
+}
+
+function getFilePath() {
+    uexFileMgr.openFile('1', path, '1');
+    var path = uexFileMgr.getFilePath('1');
+    alert(path);
+    uexFileMgr.closeFile('1');
+}
+
+function getFileRealPath() {
+    uexFileMgr.getFileRealPath(path,function(path){
+        alert(path);
+    });
+}
+
+function explorer() {
+    uexFileMgr.explorer("/sdcard/widgetone",function(path){
+        alert(path);
+    });
+}
+
+function multiExplorer (){
+    uexFileMgr.multiExplorer("/sdcard/widgetone",function(paths){
+        alert(paths);
+    });
+}
+
+function createSecure() {
+    var ret = uexFileMgr.createSecure('100', "wgt://secure.txt", '123456');
+    alert(ret)
+    alert(uexFileMgr.writeFile('100', '0', '这是加密文件内容'));
+    uexFileMgr.closeFile('100');
+}
+
+function openSecure() {
+    var ret = uexFileMgr.openSecure('100', "wgt://secure.txt", '1', '123456');
+    alert(ret);
+    uexFileMgr.readFile('100', function(data){
+     alert(data);
+ });
+    uexFileMgr.closeFile('100');
+}
+
+function getFileListByPath() {
+    var path = "wgt://"
+    var result = uexFileMgr.getFileListByPath(path);
+    alert(result);
+}
+
+function search(){
+    var data={
+        path:"res://",
+        option:5,
+        keywords:["test"],
+        suffixes:["txt"]
+    }
+    
+    uexFileMgr.search(JSON.stringify(data),function(obj){
+        if(obj.isSuccess){
+            alert(obj.result);
+        }else{
+            alert("搜索失败!");
+        }
+    });
+}
+
+function copyFile() {
+    var s = "res://layout_index_item00.xml";
+    var o = "wgt://";
+    uexFileMgr.copyFile('109',s,o,function(result){
+        alert(result);
+    });
+}            
+        </code></pre>
+    </body>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/rainbow.min.js"></script>
+    <script src="../../../js/javascript.js"></script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("single",1)
+        });
+
+        appcan.button(".play", "btn-act", function() {
+            appcan.window.closePopover("source")
+            // appcan.window.open("play","index.html");
+            // var titHeight = appcan.locStorage.val("titHeight");
+            // appcan.window.openPopover("scrawlIndex", "0", "index_content.html", '', 0, titHeight, '', '', '', '');
+            // appcan.window.publish("changeHeader", "play");
+        })
+
+    </script>
+</html>

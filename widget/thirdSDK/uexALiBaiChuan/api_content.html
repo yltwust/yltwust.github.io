@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../css/ui-box.css">
+        <link rel="stylesheet" href="../../css/ui-base.css">
+        <link rel="stylesheet" href="../../css/ui-color.css">
+        <link rel="stylesheet" href="../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+    </body>
+    
+    <script src="../../js/jquery.1.7.2.min.js"></script>
+        <script src="../../js/jquery.event.ue.js.js"></script>
+        <script src="../../js/jquery.udraggable.js"></script>
+        <script>
+            var jq = $.noConflict();
+        </script>
+    <script src="../../js/appcan.js"></script>
+    <script src="../../js/appcan.control.js"></script>
+    <script src="../../js/appcan.listview.js"></script>
+     <script src="../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.remove("index");
+            uexALiBaiChuan.cbInit = function(state){
+                        alert(state);
+                    }
+                    uexALiBaiChuan.cbLogin = function(state){
+                        alert(state);
+                    }
+                    uexALiBaiChuan.cbLogout = function(state){
+                        alert(state);
+                    }
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "init",
+            subTitle : "初始化阿里百川SDK",
+            id : "1"
+        }, {
+            title : "login",
+            subTitle : "登录",
+            id : "2"
+        }, {
+            title : "getUserInfo",
+            subTitle : "获取用户信息",
+            id : "3"
+        }, {
+            title : "openMyCart",
+            subTitle : "打开购物车",
+            id : "4"
+        }, {
+            title : "openMyOrdersPage",
+            subTitle : "打开订单列表",
+            id : "5"
+        }, {
+            title : "openItemDetailPageById",
+            subTitle : "打开商品真实ID对应的详情页面",
+            id : "6"
+        }, {
+            title : "openItemDetailPageByURL",
+            subTitle : "通过URL打开指定商品页面",
+            id : "7"
+        }, {
+            title : "logout",
+            subTitle : "退出登录",
+            id : "8"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            switch(obj.id) {
+                case "1":initButton()
+                    break;
+                case "2":loginButton()
+                    break;
+                case "3":getUserInfoButton()
+                    break;
+                case "4":openMyCartButton()
+                    break;
+                case "5":openMyOrdersPageButton()
+                    break;
+                case "6":openItemDetailPageByIdButton()
+                    break;
+                case "7":openItemDetailPageByURLButton()
+                    break;
+                case "8":logoutButton()
+                    break;    
+                }
+        })
+        
+            function initButton(){
+                    uexALiBaiChuan.init();
+            }
+            function loginButton(){
+                
+                uexALiBaiChuan.login();
+            }
+            function logoutButton(){
+                uexALiBaiChuan.logout();
+            }
+            function getUserInfoButton(){
+             var info = uexALiBaiChuan.getUserInfo();
+              alert(info);
+            }
+            function openMyCartButton(){
+                var params = {
+                    isvcode:"feelinglife"
+                };
+                uexALiBaiChuan.openMyCart(JSON.stringify(params));
+            }
+            function openMyOrdersPageButton(){
+                uexALiBaiChuan.openMyOrdersPage();
+            }
+            function openItemDetailPageByIdButton(){
+                var params = {
+                    isvcode:"feelinglife",
+                    itemid : "528887107325",
+                    mmpid : "mm_115873368_0_0"
+                };
+                uexALiBaiChuan.openItemDetailPageById(JSON.stringify(params));
+            }
+            function openItemDetailPageByURLButton(){
+                
+                var params = {
+                    url : "https://detail.tmall.com/item.htm?id=528887107325",
+                    mmpid : "mm_115873368_0_0"
+                };
+                uexALiBaiChuan.openItemDetailPageByURL(JSON.stringify(params));
+            }
+   
+
+    </script>
+</html>

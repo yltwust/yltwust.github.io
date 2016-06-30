@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="css/lstyle.css">
+        <link rel="stylesheet" href="../../css/my.css">
+        <style type="text/css">
+            #time {
+                color: #999;
+                font-size: 0.8em;
+                top: 0.3em
+            }
+            .img {
+                padding: 0;
+                margin: 0;
+            }
+            .nickname {
+                color: #333;
+            }
+            .title {
+                font-weight: normal;
+                color: #666
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg ub-ver" ontouchstart style="background: #fff">
+        <div id="dot">
+            <img src="../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="list" style="padding:0;margin:0;">
+            <!-- <video src="1.mp4" controls autoplay width="700" height="500"></video> -->
+            <div class="ub uinn" id="title">
+                <img name="avatar" src="../../extend/uexScrawl/images/5.jpg" alt="" />
+                <div id="" class="ub ub-ver ub-f1 umar2">
+                    <p class="nickname">
+                        小花同学
+                    </p>
+                    <h4 class="title"> 我又有新视频分享咯~~^.^</h4>
+                </div>
+                <div id="time">
+                    4/29  11:30
+                </div>
+            </div>
+            <div name="images" id="imgbg" class="ub video" style="padding:0;margin:0;">
+                <img src="../../extend/uexScrawl/images/5.jpg" class="img"/>
+                <img src="css/img/play.png" class="playimg"  id="1" style="position: relative;" >
+            </div>
+        </div>
+
+        <script src="../../js/jquery.1.7.2.min.js"></script>
+        <script src="../../js/jquery.event.ue.js.js"></script>
+        <script src="../../js/jquery.udraggable.js"></script>
+        <script>
+            var jq = $.noConflict();
+        </script>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/appcan.slider.js"></script>
+        <script src="js/appcan.listview.js"></script>
+        <script src="../../js/my.js"></script>
+    </body>
+    <script>
+        var num = 0;
+        var w;
+        var tHeight;
+        var iHeight;
+        var pw,
+            ph,
+            p;
+        appcan.ready(function() {
+            tHeight = $('#title').offset().height;
+            w = screen.availWidth;
+            iHeight = parseInt(w * 3 / 4);
+            $("#imgbg").css("height", iHeight + "px");
+            $(".img").css("width", w + "px").css("height", iHeight + "px");
+            if (uexWidgetOne.platformName == "iOS") {
+                p = 50;
+                pw = w / 2 - 25;
+                ph = -(iHeight / 2 + 25);
+            } else {
+                p = 100;
+                pw = w / 2 - 50;
+                ph = -(iHeight / 2 + 50);
+            }
+            $("#1").css("width", p + "px").css("height", p + "px").css("top", ph + "px").css("left", pw + "px");
+        })
+        function close() {
+            uexVideo.closePlayer();
+            $(".playimg").removeClass("uhide");
+        }
+
+
+        appcan.button("#1", "btn-act", function() {
+            close();
+            $("#1").addClass("uhide");
+            var param = {
+                src : "res://1.mp4",
+                autoStart : true,
+                width : w,
+                height : iHeight,
+                x : 0,
+                y : tHeight,
+                scrollWithWeb : true
+            }
+            uexVideo.openPlayerForShortVideo(JSON.stringify(param));
+            //uexVideo.openPlayer(JSON.stringify(param));
+
+        })
+        function play(num) {
+            close();
+            $("#pi" + num).addClass("uhide");
+            var pHeight = (tHeight + iHeight) * num + tHeight;
+            var pathVideo = appcan.locStorage.val(num);
+            //alert(pathVideo);
+            var param = {
+                // src : "res://1.mp4",
+                src : pathVideo,
+                autoStart : true,
+                width : w,
+                height : iHeight,
+                x : 0,
+                y : pHeight,
+                scrollWithWeb : true
+            }
+            uexVideo.openPlayerForShortVideo(JSON.stringify(param));
+            //uexVideo.openPlayer(JSON.stringify(param));
+        }
+
+        function show() {
+            num += 1;
+            var path = appcan.locStorage.val('path');
+            var imgsrc = appcan.locStorage.val('imgsrc');
+            appcan.locStorage.setVal(num, path);
+            var myDate = new Date();
+            var month = myDate.getMonth() + 1;
+            var time = month + "/" + myDate.getDate() + "  " + myDate.getHours() + ":" + myDate.getMinutes();
+            var addString = '<div class="ub uinn" style="border-top:1px solid #cdcdcd;">' + '<img name="avatar" src="../../extend/uexScrawl/images/5.jpg" alt="" />' + '<div id="" class="ub ub-ver ub-f1 umar2">' + '<p class="nickname">' + '小花同学' + '</p>' + '<h4 class="title">我又有新视频分享咯~~^.^</h4>' + '</div><div id="time">' + time + '</div></div>' + '<div id="" name="images" class="ub video" style="height: ' + iHeight + 'px">' + '<img src="' + imgsrc + '"  class="img" />' + '<img src="css/img/play.png" class="playimg" id="pi' + num + '" onclick="play(' + num + ')" style="width:' + p + 'px;height:' + p + 'px;position: relative;top: ' + ph + 'px;left:' + pw + 'px" >' + '</div>';
+            $("#list").append(addString);
+            $(".img").css("width", w + "px").css("height", iHeight + "px");
+        }
+
+
+        $(".source").on("click", function() {
+            var page = appcan.locStorage.val("index")
+            // if (page == "2") {
+                // var titHeight = appcan.locStorage.val("titHeight");
+                // appcan.window.openPopover("source1", "0", "source2_content.html", '', 0, titHeight, '', '', '', '')
+            // } else if (page == "1") {
+                // var titHeight = appcan.locStorage.val("titHeight");
+                // appcan.window.openPopover("source2", "0", "source2_content.html", '', 0, titHeight, '', '', '', '')
+            // }
+        })
+    </script>
+</html>

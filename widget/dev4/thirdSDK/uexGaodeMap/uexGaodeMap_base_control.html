@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/new.css">
+        <style>
+            #content {
+                padding-top: 0.5em !important;
+                text-align: center;
+            }
+            .uin{width: 30%}
+        </style>
+    </head>
+    <body class="um-vp " ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head">
+                <div class="nav-btn" id="nav-left" onclick="closeWin()">
+                    <div class="fa fa-angle-left fa-2x"></div>
+                    <div class="text">
+                        返回
+                    </div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">UI控制功能</h1>
+                <div class="nav-btn nav-bt" id="nav-right">
+                    <!-- <div class="fa fa-book"></div> -->
+                </div>
+            </div>
+            <!--header结束--><!--content开始-->
+             <div id="content" class="ub-f1 tx-l t-bla">
+                <div class="conbor">
+                    <div class="consj" id="topDiv">
+                        <div class="ub ub-hor ub-pc" id="height">
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="openmap();">
+                                    打开地图
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="closeMap();">
+                                    关闭地图
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setZoomEnable(1);">
+                                   开启缩放
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ub ub-hor ub-pc" id="height">
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setZoomEnable(0);">
+                                    关闭缩放
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setRotateEnable(1);">
+                                    开启旋转
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setRotateEnable(0);">
+                                    关闭旋转
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ub ub-hor ub-pc" id="height">
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setCompassEnable(1);">
+                                    开启指南针
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setCompassEnable(0);">
+                                    关闭指南针
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setScrollEnable(1);">
+                                    开启平移
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ub ub-hor ub-pc" id="height">
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setScrollEnable(0);">
+                                    关闭平移
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setZoomVisible(true);">
+                                    显示缩放(安卓) 
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setZoomVisible(false);">
+                                    隐藏缩放(安卓)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ub ub-hor ub-pc" id="height">
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setScaleVisible(true);">
+                                    显示比例尺
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setScaleVisible(false);">
+                                   隐藏比例尺
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--content结束-->
+
+        </div>
+        <script src="../../../js/appcan.js"></script>
+        <script src="../../../js/appcan.control.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            uexWidgetOne.cbError = function(opid, type, data) {
+                alert(data);
+            }
+            uexGaodeMap.onSDKReceiverError = function makerListner(json) {
+                alert("onSDKReceiverError: " + json);
+            }
+            uexGaodeMap.onMapLoadedListener = onMapLoadedListener;
+            uexWindow.setReportKey(0, 1);
+            uexWindow.onKeyPressed = function(keyCode) {
+                if (keyCode == 0) {
+                    closeWin();
+                }
+            }
+        });
+        function closeWin() {
+            uexWindow.close(-1);
+        }
+
+        function onMapLoadedListener() {
+            uexWindow.toast(0, 5, "地图加载完成", 1000);
+        }
+
+        function openmap() {
+            var divTop = document.getElementById("topDiv").offsetTop + document.getElementById("topDiv").offsetHeight + 70;
+            var w = screen.availWidth - 20;
+            var h = screen.availHeight / 2;
+            var params = {
+                left : 10,
+                top : divTop,
+                width : w,
+                height : h,
+                longitude : 114.402815,
+                latitude : 30.475798
+            };
+            var data = JSON.stringify(params);
+            uexGaodeMap.open(data);
+        }
+
+        function closeMap() {
+            uexGaodeMap.close();
+        }
+
+        function setZoomEnable(v) {
+            var params = {
+                type : v
+            };
+            var data = JSON.stringify(params);
+            uexGaodeMap.setZoomEnable(data);
+        }
+
+        function setRotateEnable(v) {
+            var params = {
+                type : v
+            };
+            var data = JSON.stringify(params);
+            uexGaodeMap.setRotateEnable(data);
+        }
+
+        function setCompassEnable(v) {
+            var params = {
+                type : v
+            };
+            var data = JSON.stringify(params);
+            uexGaodeMap.setCompassEnable(data);
+        }
+
+        function setScrollEnable(v) {
+            var params = {
+                type : v
+            };
+            var data = JSON.stringify(params);
+            uexGaodeMap.setScrollEnable(data);
+        }
+
+        function setZoomVisible(visible) {
+            var params = {
+                visible : visible
+            };
+            uexGaodeMap.setZoomVisible(JSON.stringify(params));
+        }
+
+        function setScaleVisible(visible) {
+            var params = {
+                visible : visible
+            };
+            uexGaodeMap.setScaleVisible(JSON.stringify(params));
+        }
+    </script>
+</html>

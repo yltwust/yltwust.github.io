@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <style type="text/css">
+            #header {
+                background-color: #292F36;
+            }
+            .bc-bg, .lis {
+                background-color: #383F49;
+            }
+            .bc-border {
+                color: #383F49;
+                border-color: #383F49;
+            }
+            .line1 {
+                color: #a1acba;
+                padding-left: 0.2em
+            }
+            .lis {
+                padding-left: 0.7em !important
+            }
+        </style>
+    </head>
+    <body class="um-vp " ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head">
+                <div class="nav-btn" id="nav-left"></div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">基本功能</h1>
+                <div class="nav-btn nav-bt" id="nav-right"></div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l">
+                <div id="listview"  class="ubt bc-border sc-bg"></div>
+
+            </div>
+            <!--content结束-->
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/appcan.listview.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            var titHeight = $('#header').offset().height;
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+        });
+        appcan.button(".nav-btn", "btn-act", function() {
+            appcan.window.close(-1);
+        })
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasAngle : false,
+            hasIcon : true
+        });
+        lv.set([{
+            title : "应用引擎",
+            id : "1",
+            icon : "css/res/home/images/engine1.png"
+        }, {
+            title : "功能扩展",
+            id : "2",
+            icon : "css/res/home/images/extend1.png"
+        }, {
+            title : "系统功能",
+            id : "3",
+            icon : "css/res/home/images/sys1.png"
+        }, {
+            title : "界面布局",
+            id : "4",
+            icon : "css/res/home/images/ui1.png"
+        }, {
+            title : "第三方SDK",
+            id : "5",
+            icon : "css/res/home/images/third1.png"
+        }, {
+            title : "网络通讯",
+            id : "6",
+            icon : "css/res/home/images/net1.png"
+        }])
+
+        lv.on("click", function(ele, obj, curEle) {
+            var isDev4 = appcan.locStorage.val("isDev4")
+            if (isDev4 == 1) {
+                switch (obj.id) {
+                case "3":
+                    appcan.window.open("sysDev4", "sysDev4_content.html", 10);
+                    break;
+                case "5":
+                    appcan.window.open("thirdSDKDev4", "thirdSDKDev4_content.html", 10);
+                    break;
+                }
+            } else {
+                switch (obj.id) {
+                case "2":
+                    appcan.window.open("extend", "extend.html", 10);
+                    break;
+                case "5":
+                    appcan.window.open("thirdSDK", "thirdSDK.html", 10);
+                    break;
+                }
+            }
+
+        })
+
+    </script>
+</html>

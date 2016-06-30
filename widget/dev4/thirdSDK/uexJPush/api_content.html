@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+        <input class="textbox" type="hidden" id="clearNotificationById" value="579690032">
+    </body>
+
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        window.uexOnload = function(type) {
+            if (type == 0) {
+                uexJPush.onReceiveRegistration = onReceiveRegistration;
+                uexJPush.onReceiveMessage = onReceiveMessage;
+                uexJPush.onReceiveNotification = onReceiveNotification;
+                uexJPush.onReceiveNotificationOpen = onReceiveNotificationOpen;
+                uexJPush.onReceiveConnectionChange = onReceiveConnectionChange;
+            }
+        }
+        function onReceiveMessage(info) {
+            console.log(info);
+            alert("----onReceiveMessage----\n" + info);
+        }
+
+        function onReceiveNotification(info) {
+            console.log(info);
+            alert("----onReceiveNotification----\n" + info);
+        }
+
+        function onReceiveNotificationOpen(info) {
+            alert("----onReceiveNotificationOpen----\n" + info);
+        }
+
+        function onReceiveConnectionChange(info) {
+            alert(info);
+        }
+
+        function onReceiveRegistration(info) {
+            alert("----onReceiveRegistration----\n" + info);
+        }
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "stopPush",
+            subTitle : "停止推送服务(安卓)",
+            id : "1"
+        }, {
+            title : "resumePush",
+            subTitle : "恢复推送服务(安卓)",
+            id : "2"
+        }, {
+            title : "setAlias",
+            subTitle : "设置别名",
+            id : "3"
+        }, {
+            title : "setTags",
+            subTitle : "设置标签",
+            id : "4"
+        }, {
+            title : "setAliasAndTags",
+            subTitle : "同时设置别名与标签",
+            id : "5"
+        }, {
+            title : "getRegistrationID",
+            subTitle : "取得应用程序对应的 RegistrationID",
+            id : "6"
+        }, {
+            title : "clearAllNotifications",
+            subTitle : "清除所有通知(安卓)",
+            id : "7"
+        }, {
+            title : "clearNotificationById",
+            subTitle : "根据Id清除某条通知(安卓)",
+            id : "8"
+        }, {
+            title : "getConnectionState",
+            subTitle : "获取推送连接状态",
+            id : "9"
+        }, {
+            title : "addLocalNotification",
+            subTitle : "添加一个本地通知",
+            id : "10"
+        }, {
+            title : "removeLocalNotification",
+            subTitle : "移除一个本地通知",
+            id : "11"
+        }, {
+            title : "clearLocalNotifications",
+            subTitle : "移除所有的通知",
+            id : "12"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            switch(obj.id) {
+            case "1":
+                stopPush();
+                break;
+            case "2":
+                resumePush();
+                break;
+            case "3":
+                setAlias();
+                break;
+            case "4":
+                setTags();
+                break;
+            case "5":
+                setAliasAndTags();
+                break;
+            case "6":
+                getRegistrationID();
+                break;
+            case "7":
+                clearAllNotifications();
+                break;
+            case "8":
+                clearNotificationById();
+                break;
+            case "9":
+                getConnectionState();
+                break;
+            case "10":
+                addLocalNotification();
+                break;
+            case "11":
+                removeLocalNotification();
+                break;
+            case "12":
+                clearLocalNotifications();
+                break;
+            }
+        });
+        var commonCallback = function(data) {
+            alert("commonCallback:" + JSON.stringify(data));
+        };
+        function stopPush() {
+            uexJPush.stopPush();
+        }
+
+        function resumePush() {
+            uexJPush.resumePush();
+        }
+
+        // 0表示成功；
+        function setAlias() {
+            var params = {
+                alias : "alias22"
+            };
+            var data = JSON.stringify(params);
+            uexJPush.setAlias(data, commonCallback);
+        }
+
+        function setTags() {
+            var tags = new Array("tag1", "tag2", "tag3");
+            var params = {
+                tags : tags
+            };
+            var data = JSON.stringify(params);
+            uexJPush.setTags(data, commonCallback);
+        }
+
+        function setAliasAndTags() {
+            var tags = new Array("tag4", "tag5", "tag6");
+            var params = {
+                alias : "alias66",
+                tags : tags
+            };
+            var data = JSON.stringify(params);
+            uexJPush.setAliasAndTags(data, commonCallback);
+        }
+        
+        //此接口无回调，根据文档
+        function getRegistrationID() {
+            var id = uexJPush.getRegistrationID();
+            alert(id, commonCallback)
+            
+        }
+
+        //此接口无回调，根据文档
+        function clearAllNotifications() {
+            uexJPush.clearAllNotifications();
+        }
+
+        //此接口无回调，根据文档
+        function clearNotificationById() {
+            var id = document.getElementById("clearNotificationById").value;
+            var params = {
+                notificationId : id
+            };
+            var data = JSON.stringify(params);
+            uexJPush.clearNotificationById(data);
+        }
+
+        // 0表示连上；1表示没连上；
+        function getConnectionState() {
+           uexJPush.getConnectionState(function(data){
+               alert(JSON.stringify(data))
+           });
+        }
+
+        //此接口无回调，根据文档
+        function addLocalNotification() {
+            var params = {
+                builderId : 0,
+                title : "这是title",
+                content : "这是内容",
+                extras : {
+                    "key" : "value"
+                },
+                notificationId : 3,
+                broadCastTime : 10000
+            };
+            var data = JSON.stringify(params);
+            uexJPush.addLocalNotification(data);
+        }
+
+        //此接口无回调，根据文档
+        function removeLocalNotification() {
+            var notificationId = 3;
+            var params = {
+                notificationId : notificationId
+            };
+            var data = JSON.stringify(params);
+            uexJPush.removeLocalNotification(data);
+        }
+
+        //此接口无回调，根据文档
+        function clearLocalNotifications() {
+            uexJPush.clearLocalNotifications();
+        }
+        
+        //此接口无回调，根据文档 3.0.4新增接口
+        // function setBadgeNumber() {
+            // uexJPush.setBadgeNumber(1);
+        // }
+        
+        //此接口无回调，根据文档 3.0.5新增接口； 1表示禁止
+        // function disableLocalNotificationAlertView() {
+            // uexJPush.disableLocalNotificationAlertView(2);
+        // }
+    </script>
+</html>

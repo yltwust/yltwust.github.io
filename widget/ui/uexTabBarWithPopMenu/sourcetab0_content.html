@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../css/ui-box.css">
+        <link rel="stylesheet" href="../../css/ui-base.css">
+        <link rel="stylesheet" href="../../css/ui-color.css">
+        <link rel="stylesheet" href="../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../css/themes/pastie.css">
+        <link rel="stylesheet" href="../../css/my.css">
+        <style type="text/css">
+            .bc-bg {
+                background-color: #fff;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <pre><code data-language="javascript">appcan.ready(function() {
+    uexTabBarWithPopMenu.onTabItemClick = tabItemCallback;
+    uexTabBarWithPopMenu.onPopMenuItemClick = popItemCallback;
+}
+
+function createMenu() {
+var params = {
+    statusColor:"#ffffff",//"#EA7C24",
+    tab : {
+    textSize : 10,
+    textNColor : "#333333",
+    textHColor : "#2a89ff",
+    centerImg : "res://tabBar/plus.png",
+    bgColor : "#f8f8f8",
+    data : [{
+        title : "动态",
+        iconN : "res://tabBar/zone.png",
+        iconH : "res://tabBar/zone-act.png"
+        }, {
+        title : "与我相关",
+        iconN : "res://tabBar/me.png",
+        iconH : "res://tabBar/me-act.png"
+    }, {
+        title : "我的空间",
+        iconN : "res://tabBar/my.png",
+        iconH : "res://tabBar/my-act.png"
+    }, {
+        title : "发现",
+        iconN : "res://tabBar/find.png",
+        iconH : "res://tabBar/find-act.png"
+    }]
+    },
+        popMenu : {
+        textSize : 13,
+        textNColor : "#000000",
+        textHColor : "#dddddd",
+        bgColor : "#BBFFFFFF",
+        bottomDistance : 300,
+        data : [{
+            title : "说说",
+            iconN : "res://tabBar/pop1.png",
+            iconH : "res://tabBar/pop1_1.png"
+        }, {
+            title : "照片",
+            iconN : "res://tabBar/pop2.png",
+            iconH : "res://tabBar/pop2_1.png"
+        }, {
+            title : "视频",
+            iconN : "res://tabBar/pop3.png",
+            iconH : "res://tabBar/pop3_1.png"
+        }, {
+            title : "直播",
+            iconN : "res://tabBar/pop4.png",
+            iconH : "res://tabBar/pop4_1.png"
+        }, {
+            title : "水印相机",
+            iconN : "res://tabBar/pop5.png",
+            iconH : "res://tabBar/pop5_1.png"
+        }, {
+            title : "签到",
+            iconN : "res://tabBar/pop6.png",
+            iconH : "res://tabBar/pop6_1.png"
+        }, {
+            title : "动感影集",
+            iconN : "res://tabBar/pop7.png",
+            iconH : "res://tabBar/pop7_1.png"
+        }, {
+            title : "日志",
+            iconN : "res://tabBar/pop8.png",
+            iconH : "res://tabBar/pop8_1.png"
+       }, {
+            title : "更多",
+            iconN : "res://tabBar/pop9.png",
+            iconH : "res://tabBar/pop9_1.png"
+           }]
+       }
+   }
+   uexTabBarWithPopMenu.open(JSON.stringify(params));
+   setItemChecked(0);
+}
+function tabItemCallback(data){
+   setItemChecked(JSON.parse(data).index);
+}
+function popItemCallback(data){
+   camera();
+}</code></pre>
+    </body>
+    <script src="../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../js/jquery.event.ue.js.js"></script>
+    <script src="../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../js/rainbow.min.js"></script>
+    <script src="../../js/javascript.js"></script>
+    <script src="../../js/appcan.js"></script>
+    <script src="../../js/appcan.control.js"></script>
+    <script src="../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+        });
+
+        appcan.button(".play", "btn-act", function() {
+            var page = appcan.locStorage.val("index")
+            appcan.window.closePopover("source"+page)
+        })
+    </script>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../css/ui-box.css">
+        <link rel="stylesheet" href="../../css/ui-base.css">
+        <link rel="stylesheet" href="../../css/ui-color.css">
+        <link rel="stylesheet" href="../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+    </body>
+    
+    <script src="../../js/jquery.1.7.2.min.js"></script>
+        <script src="../../js/jquery.event.ue.js.js"></script>
+        <script src="../../js/jquery.udraggable.js"></script>
+        <script>
+            var jq = $.noConflict();
+        </script>
+    <script src="../../js/appcan.js"></script>
+    <script src="../../js/appcan.control.js"></script>
+    <script src="../../js/appcan.listview.js"></script>
+     <script src="../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.remove("index");
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "openDataBase",
+            subTitle : "打开数据库",
+            id : "1"
+        }, {
+            title : "executeSql",
+            subTitle : "Sql语句的执行",
+            id : "2"
+        }, {
+            title : "selectSql",
+            subTitle : "Sql语句的查询",
+            id : "3"
+        }, {
+            title : "transaction",
+            subTitle : "事务的执行",
+            id : "4"
+        }, {
+            title : "closeDataBase",
+            subTitle : "关闭数据库",
+            id : "5"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            // appcan.window.open("databaseIndex", "index.html", 10)
+            // appcan.locStorage.val("databaseHeader",obj.title);
+            // appcan.locStorage.val("index",obj.id);
+            switch(obj.id) {
+                case "1":
+                    createDB();
+                    deleteTable();
+                    break;
+                case "2":
+                    createTable();
+                    break;
+                case "3":
+                    insertData();
+                    selectData();
+                    break;
+                case "4":
+                    transaction();
+                    break;
+                case "5":
+                    closeDataBase();
+                    break;
+                }
+        })
+        
+        var cText = 0;
+    var cJson = 1;
+    var cInt = 2;
+
+    var dbName; 
+    function createDB(){
+        dbName = "uexDB";
+        uexDataBaseMgr.openDataBase(dbName,1);
+        uexDataBaseMgr.cbOpenDataBase = createDBCallBack;
+    }
+
+    function createTable(){
+        //var sql = "CREATE TABLE testTable (_id  INTEGER PRIMARY KEY,name TEXT)";
+        uexDataBaseMgr.executeSql(dbName,1,"CREATE TABLE testTable (_id  INTEGER PRIMARY KEY,name TEXT,data VARCHAR)");
+        uexDataBaseMgr.cbExecuteSql = createTableCallBack;
+    }
+    
+    function insertData(){
+    //  var sql = "INSERT INTO testTable (name) VALUES ('this is test')";
+        uexDataBaseMgr.executeSql(dbName,1,"INSERT INTO testTable (_id,name,data) VALUES ('2','这是测试','这是测试')");
+        uexDataBaseMgr.cbExecuteSql = insertDataCallBack;
+    }
+    
+    function selectData(){
+    //  var sql = "SELECT * FROM testTable";
+        uexDataBaseMgr.selectSql(dbName,1,"SELECT * FROM testTable");
+        uexDataBaseMgr.cbSelectSql = selectDataCallBack;
+    }
+    
+    function updateData(){
+    //  var sql = UPDATE testTable SET name='这是更改' WHERE _id = 1;
+        uexDataBaseMgr.executeSql(dbName,1,"UPDATE testTable SET name='这是更改' WHERE _id = 1");
+        uexDataBaseMgr.cbSelectSql = updateDataCallBack;
+    }
+    
+    function transaction(){
+        uexDataBaseMgr.transaction(dbName,1,inFunc);
+        uexDataBaseMgr.cbTransaction = transactionCallBack;
+        //uexDataBaseMgr.beginTransaction(1);
+        //uexDataBaseMgr.cbBeginTransaction = beginTransactionCallBack;
+        //drop table testTable是删除表；DELETE FROM testTable WHERE _id = 1删除第一项
+    }
+
+    function deleteTable(){
+        uexDataBaseMgr.executeSql(dbName,1,"DROP TABLE testTable");
+        uexDataBaseMgr.cbExecuteSql = deleteTableCallBack;
+    }
+
+    function createDBCallBack(opid,type,data){
+        switch(type){
+            case cText:
+                alert("uex.cText");
+                break;
+            case cJson:
+              alert("uex.cJson");
+                break;
+            case cInt:
+            if(opid == 1 &&type == 2&&data == 0){
+                alert("数据库打开成功！");
+            }else{
+                 alert("数据库打开失败！");
+            }
+            break;
+          default:
+              alert("error"); 
+      }
+        
+    };
+    
+    function insertDataCallBack(opid,type,data){
+        switch(type){
+            case cText:
+                alert("uex.cText");
+                break;
+            case cJson:
+              alert("uex.cJson");
+                break;
+            case cInt:
+            if(opid == 1&&type == 2 &&data == 0){
+                alert("数据插入成功！");
+            }else{
+                 alert("数据插入失败！");
+            }
+            break;
+          default:
+              alert("error");  
+      }
+    };
+
+    function createTableCallBack(opid,type,data){
+        switch(type){
+            case cText:
+                alert("uex.cText");
+                break;
+            case cJson:
+              alert("uex.cJson");
+                break;
+            case cInt:
+            if(opid == 1&&type == 2 &&data == 0){
+                alert("表创建成功！");
+            }else{
+                 alert("表创建失败！");
+            }
+            break;
+          default:
+              alert("error");   
+      }
+            
+    };
+    
+    function selectDataCallBack(opid,type,value){
+        switch(type){
+            case cText:
+                alert("uex.cText");
+                break;
+            case cJson:
+            if(opid == 1 && type == 1){
+                var jsonList=eval("("+value+")");
+              if(jsonList.length == 0){
+                  alert("无数据");
+              }
+              for(var i=0;i<jsonList.length;i++){
+
+         　　　　      for(var key in jsonList[i]){
+                 　　                                 alert("key："+key+",value："+jsonList[i][key]); 
+                 }
+              } 
+            }else{
+                alert("查询失败！");
+            }
+            break;
+          case cInt:
+            alert("uex.cInt"); 
+            break;
+           
+          default:
+              alert("error");  
+
+      }
+
+    };
+
+    function updateDataCallBack(opid,type,data){
+        switch(type){
+            case cText:
+                alert("uex.cText");
+                break;
+            case cJson:
+              alert("uex.cJson");
+                break;
+            case cInt:
+            if(opid == 1&&type == 2 &&data == 0){
+                alert("数据更改成功！");
+            }else{
+                 alert("数据更改失败！");
+            }
+            break;
+          default:
+              alert("error");  
+      }
+    };
+    
+    function inFunc(){
+        uexDataBaseMgr.executeSql(dbName,1,"DELETE FROM testTable WHERE _id = 1");
+        uexDataBaseMgr.cbExecuteSql = null;
+    }
+
+    function transactionCallBack(opid,type,data){
+        switch(type){
+            case cText:
+                alert("uex.cText");
+                break;
+            case cJson:
+              alert("uex.cJson");
+                break;
+            case cInt:
+            if(opid == 1&&type == 2  &&data == 0){
+                alert("事务提交成功！");
+            }else{
+                 alert("事务提交失败！");
+            } 
+            break;
+          default:
+              alert("error");  
+      }
+    };
+    
+    function closeDataBase(){
+        uexDataBaseMgr.closeDataBase(dbName,1);
+        uexDataBaseMgr.cbCloseDataBase = closeDataBaseCallBack;
+    }
+    
+    function closeDataBaseCallBack(opid,type,data){
+        switch(type){
+            case cText:
+                alert("uex.cText");
+                break;
+            case cJson:
+              alert("uex.cJson");
+                break;
+            case cInt:
+            if(opid == 1 &&type == 2&&data == 0){
+                alert("数据库关闭成功！");
+            }else{
+                 alert("数据库关闭失败！");
+            }
+            break;
+          default:
+              alert("error");
+      }
+    };
+    
+    function deleteTableCallBack(opid,type,data){
+        switch(type){
+            case cText:
+                alert("uex.cText");
+                break;
+            case cJson:
+              alert("uex.cJson");
+                break;
+            case cInt:
+            if(opid == 1 &&type == 2&&data == 0){
+                //alert("删除表成功！");
+            }else{
+                 //alert("删除表失败！");
+            }
+            break;
+          default:
+              alert("error");
+      }
+    };
+
+    </script>
+</html>

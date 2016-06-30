@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+        <input class="textbox" type="hidden" value="2016" id="addYear">
+        <br/>
+        <input class="textbox" type="hidden" value="6" id="addMonth">
+        <br/>
+        <input class="textbox" type="hidden" value="22" id="addDay">
+        <br/>
+        <input class="textbox" type="hidden" value="2016" id="year">
+        <br/>
+        <input class="textbox" type="hidden" value="10" id="month">
+        <br/>
+        <input class="textbox" type="hidden" value="10" id="addHour">
+        <br/>
+        <input class="textbox" type="hidden" value="10" id="addMinute">
+        <br/>
+        <input class="textbox" id="inputdlgType" type="hidden" value="0">
+        <br/>
+        <input class="textbox" id="inputdlgData" type="hidden" value="请输入">
+        <br/>
+        <input class="textbox" id="inputdlgBtn" type="hidden" value="发送">
+    </body>
+
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "openDatePicker",
+            subTitle : "打开日期",
+            id : "1"
+        }, {
+            title : "openDatePickerWithoutDay",
+            subTitle : "打开年月",
+            id : "2"
+        }, {
+            title : "openTimePicker",
+            subTitle : "打开时间",
+            id : "3"
+        }, {
+            title : "openInputDialog",
+            subTitle : "输入框测试",
+            id : "4"
+        }, {
+            title : "openDatePickerWithConfig",
+            subTitle : "打开带配置的日期选择器",
+            id : "5"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            switch(obj.id) {
+            case "1":
+                openDatePicker();
+                break;
+            case "2":
+                openDatePickerWithoutDay();
+                break;
+            case "3":
+                openTimePicker();
+                break;
+            case "4":
+                setTimeout(function(){openInputDialog()},1300);
+                break;
+            case "5":
+                openDatePickerWithConfig();
+                break;
+            }
+        })
+        var commonCallback = function(data) {
+            alert("commonCallBack:" + JSON.stringify(data));
+        };
+
+        function openDatePicker() {
+            uexControl.openDatePicker(document.getElementById('addYear').value, document.getElementById('addMonth').value, document.getElementById('addDay').value, commonCallback);
+        }
+
+        function openDatePickerWithoutDay() {
+            uexControl.openDatePickerWithoutDay(document.getElementById('year').value, document.getElementById('month').value, commonCallback);
+        }
+
+        function openTimePicker() {
+            uexControl.openTimePicker(document.getElementById('addHour').value, document.getElementById('addMinute').value, commonCallback);
+        }
+
+        function openInputDialog() {
+            var inputdlgT = document.getElementById('inputdlgType').value;
+            var inputdlgD = document.getElementById('inputdlgData').value;
+            var inputdlgB = document.getElementById('inputdlgBtn').value;
+            var bgParm1 = '{"dialogBg":"#ffffff","dialogETBg":"res://plugin_uexcontrol_edittext_bg.png","dialogButBg":"res://plugin_uexcontrol_button.png"}';
+            uexControl.openInputDialog(inputdlgT,inputdlgD,inputdlgB, commonCallback);
+        }
+
+        function openDatePickerWithConfig() {
+            var params = {
+                datePickerId : 1,
+                initDate : {
+                    year : 2016,
+                    month : 8,
+                    day : 1
+                },
+                maxDate : {
+                    limitType : 1,
+                    data : {
+                        month : 1
+                    }
+                }
+            }
+            var data = JSON.stringify(params);
+            uexControl.openDatePickerWithConfig(data, commonCallback);
+        }
+    </script>
+</html>

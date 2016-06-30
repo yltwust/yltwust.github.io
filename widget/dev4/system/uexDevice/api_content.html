@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            #info{background-color: #fff;border-top: none;}
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+    </body>
+
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("open",0)
+            appcan.locStorage.remove("index");
+            $(".lis").eq(2).after('<div class="ubb ubt bc-border c-wh tcxx breakword hide" id="info"></div>')
+            $(".lis .fa").eq(2).addClass("fa-angle-down")
+            $(".lis").eq(2).addClass("change")
+            appcan.button('.change','btn-act')
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "vibrate",
+            subTitle : "开启设备震动",
+            id : "1"
+        }, {
+            title : "cancelVibrate",
+            subTitle : "关闭设备震动",
+            id : "2"
+        }, {
+            title : "getInfo",
+            subTitle : "获取设备信息",
+            id : "3"
+        }, {
+            title : "screenCapture",
+            subTitle : "屏幕截图",
+            id : "4"
+        }, {
+            title : "setVolume",
+            subTitle : "调整音量",
+            id : "5"
+        }, {
+            title : "getVolume",
+            subTitle : "获取系统音量值",
+            id : "6"
+        }, {
+            title : "setScreenAlwaysBright",
+            subTitle : "屏幕常亮控制",
+            id : "7"
+        }, {
+            title : "setScreenBrightness",
+            subTitle : "调整屏幕亮度",
+            id : "8"
+        }, {
+            title : "getScreenBrightness",
+            subTitle : "获取屏幕亮度",
+            id : "9"
+        }, {
+            title : "openWiFiInterface",
+            subTitle : "打开WIFI设置页",
+            id : "10"
+        }, {
+            title : "isFunctionEnable",
+            subTitle : "判断某功能是否开启",
+            id : "11"
+        }, {
+            title : "openSetting",
+            subTitle : "打开设置界面",
+            id : "12"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            var name = obj.title;
+            eval(name + "()");
+            // switch(obj.id) {
+            // case "1":
+                // vibrate()
+                // break;
+            // case "2":
+                // cancelVibrate()
+                // break;
+            // case "3":
+                // getInfo()
+                // break;
+            // case "4":
+                // screenCapture()
+                // break;
+            // case "5":
+                // setVolume()
+                // break;
+            // case "6":
+                // getVolume()
+                // break;
+            // case "7":
+                // setScreenAlwaysBright()
+                // break;
+            // case "8":
+                // setScreenAlwaysBright()
+                // break;    
+            // case "9":
+                // getScreenBrightness()
+                // break;
+            // case "9":
+                // openWiFiInterface()
+                // break;
+            // case "10":
+                // isFunctionEnable()
+                // break;
+            // case "11":
+                // openSetting()
+                // break;
+            // }
+        })
+        
+        function change() {
+            if (appcan.locStorage.val("open") == 0) {
+                $(".lis .fa").eq(2).removeClass("fa-angle-down").addClass("fa-angle-up");
+                $("#info").removeClass("hide");
+                appcan.locStorage.val("open", 1);
+            } else {
+                $(".lis .fa").eq(2).removeClass("fa-angle-up").addClass("fa-angle-down");
+                $("#info").addClass("hide");
+                appcan.locStorage.val("open", 0);
+            }
+        }
+        
+        var commonCallback = function(data) {
+            alert("callback:" + JSON.stringify(data));
+        }
+        function vibrate() {
+            uexDevice.vibrate("50000")
+        }
+
+        function cancelVibrate() {
+            uexDevice.cancelVibrate()
+        }
+        
+        function getInfo() {
+            $("#info").empty()
+            var arr = {
+                '系统版本' : "1",
+                '厂商信息' : "2",
+                'IMEI信息' : "10",
+                '网络状态' : "13",
+                '磁盘空间' : "14",
+                '运营商名称' : "15",
+                'DeviceToken' : "11",
+                'UUID' : "20",
+                '型号' : "17",
+                '分辨率' : "18"
+            };
+            for (var i in arr) {
+                var data = uexDevice.getInfo(arr[i]);
+                if(!data){
+                    data = '';
+                }
+                if (arr[i] == 1) {
+                    $("<div>系统版本:" + data + '</div>').appendTo($('#info'))
+                }
+                if (arr[i] == 2) {
+                    $("<div>厂商信息:" + data + '</div>').appendTo($('#info'))
+                }
+                if (arr[i] == 10) {
+                    $("<div>IMEI信息:" + data + '</div>').appendTo($('#info'))
+                }
+                if (arr[i] == 13) {
+                    if (data == -1) {
+                        $("<div>网络状态:网络不可用</div>").appendTo($('#info'))
+                    } else if (data == 0) {
+                        $("<div>网络状态:WIFI网络</div>").appendTo($('#info'))
+                    } else if (data == 1) {
+                        $("<div>网络状态:3G网络</div>").appendTo($('#info'))
+                    } else if (data == 2) {
+                        $("<div>网络状态:2G网络</div>").appendTo($('#info'))
+                    }
+                }
+                if (arr[i] == 14) {
+                     $("<div>磁盘空间:" + data + '</div>').appendTo($('#info'))
+                }
+                if (arr[i] == 15) {
+                    $("<div>运营商名称:" + data + '</div>').appendTo($('#info'))
+                }
+                if (arr[i] == 11) {
+                    $("<div>DeviceToken:" + data + '</div>').appendTo($('#info'))
+                }
+                if (arr[i] == 17) {
+                    $("<div>型号:" + data + '</div>').appendTo($('#info'))
+                }
+                if (arr[i] == 18) {
+                    $("<div>分辨率:" + data + '</div>').appendTo($('#info'))
+                }
+            }
+            change();
+        }
+        
+        
+
+        function screenCapture() {
+            uexDevice.screenCapture(0.8, function(data) {
+                alert(JSON.stringify(data));
+            });
+        }
+
+        function setVolume() {
+            uexDevice.setVolume('1');
+            alert("已设置音量为1")
+        }
+
+        function getVolume() {
+            alert(uexDevice.getVolume())
+        }
+
+        function setScreenAlwaysBright() {
+            uexDevice.setScreenAlwaysBright(1)
+            alert("已设置屏幕常亮")
+        }
+
+        function setScreenBrightness() {
+            uexDevice.setScreenBrightness(0.9)
+            alert("已设置屏幕亮度为0.9")
+        }
+
+        function getScreenBrightness() {
+            alert(uexDevice.getScreenBrightness())
+        }
+
+        function openWiFiInterface() {
+            uexDevice.openWiFiInterface()
+        }
+
+        function isFunctionEnable() {
+            uexDevice.isFunctionEnable({
+                setting : "GPS"
+            }, commonCallback);
+        }
+
+        function openSetting() {
+            uexDevice.openSetting({
+                setting : "GPS"
+            }, commonCallback);
+        }
+
+    </script>
+</html>

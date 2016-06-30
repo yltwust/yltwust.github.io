@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+    </body>
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            uexScanner.cbOpen = ScannerSuccessCallBack;
+            uexWidgetOne.cbError = ScannerFailedCallBack;
+        });
+        function ScannerSuccessCallBack(opCode, dataType, data) {
+            alert("opCode:" + opCode + " data: " + data);
+        }
+        function ScannerFailedCallBack(data) {
+            alert(data);
+        }
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "open",
+            subTitle : "打开音频文件",
+        }, {
+            title : "play",
+            subTitle : "播放",
+        }, {
+            title : "pause",
+            subTitle : "暂停",
+        }, {
+            title : "stop",
+            subTitle : "停止",
+        }, {
+            title : "replay",
+            subTitle : "重播",
+        }, {
+            title : "volumeUp",
+            subTitle : "音量+",
+        }, {
+            title : "volumeDown",
+            subTitle : "音量-",
+        }, {
+            title : "setPlayMode",
+            subTitle : "设置播放模式",
+        }, {
+            title : "setProximityState",
+            subTitle : "设置听筒感应开关",
+        }, {
+            title : "startBackgroundRecord",
+            subTitle : "开始后台录音",
+        }, {
+            title : "stopBackgroundRecord",
+            subTitle : "停止后台录音",
+        }, {
+            title : "openSoundPool",
+            subTitle : "打开音效池",
+        }, {
+            title : "addSound",
+            subTitle : "向音效池添加音效",
+        }, {
+            title : "playFromSoundPool",
+            subTitle : "播放音效",
+        }, {
+            title : "stopFromSoundPool",
+            subTitle : "停止音效",
+        }, {
+            title : "closeSoundPool",
+            subTitle : "关闭音效池",
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            var name = obj.title;
+            eval(name + "()");
+        })
+        // function test(){
+            // appcan.window.open("test","uexAudio.html")
+        // }
+        function open(){
+            uexAudio.open("res://song.mp3");
+            alert("文件打开成功")
+        }
+        function play(){
+            uexAudio.play(0);
+            alert("开始播放")
+        }
+        function pause(){
+            uexAudio.pause();
+            alert("暂停播放")
+        }
+        function stop(){
+            uexAudio.stop()
+            alert("停止播放")
+        }
+        function replay(){
+            uexAudio.replay()
+            alert("重新播放")
+        }
+        function volumeUp(){
+            uexAudio.volumeUp()
+        }
+        function volumeDown(){
+            uexAudio.volumeDown()
+        }
+        function setPlayMode(){
+            var params = {
+                playMode:'0'
+            };
+            params = JSON.stringify(params);
+            uexAudio.setPlayMode(params);
+            uexWindow.toast("0", "5", "扩音器模式", "2000");
+        }
+        function setProximityState(){
+            uexAudio.open("res://song.mp3");
+            uexAudio.setProximityState('1');
+            uexAudio.play(0);
+            uexWindow.toast("0", "5", "听筒感应已开", "2000");
+        }
+        function startBackgroundRecord(){
+            uexAudio.startBackgroundRecord(1);
+            alert("开始后台录音")
+        }
+        function stopBackgroundRecord(){
+            uexAudio.stopBackgroundRecord(function(path){
+                alert(path);
+            });
+        }
+        function openSoundPool(){
+            uexAudio.openSoundPool();
+            alert("音效池已打开")
+        }
+        function addSound(){
+            uexAudio.addSound(2,"res://7423.wav")
+            alert("音效已添加")
+        }
+        function playFromSoundPool(){
+            uexAudio.playFromSoundPool(2)
+            alert("播放音效")
+        }
+        function stopFromSoundPool(){
+            uexAudio.stopFromSoundPool(2)
+            alert("停止音效")
+        }
+        function closeSoundPool (){
+            uexAudio.closeSoundPool();
+            alert("音效池已关闭")
+        }
+    </script>
+</html>

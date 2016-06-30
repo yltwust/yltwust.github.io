@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <style type="text/css">
+            #tabview {
+                background-color: #FFFFFF;
+            }
+            #tabview .sc-text-tab .ulev {
+                color: #898b92;
+            }
+            #tabview .sc-text-active .ulev {
+                color: #2A89FF !important;
+            }
+            .tabicon {
+                width: 0.8em;
+                height: 0.8em
+            }
+            .basic {
+                background-image: url("css/res/home/images/basic.png")
+            }
+            .basic-act {
+                background-image: url("css/res/home/images/basic-act.png")
+            }
+            .dev {
+                background-image: url("css/res/home/images/dev.png")
+            }
+            .dev-act {
+                background-image: url("css/res/home/images/dev-act.png")
+            }
+            .code {
+                background-image: url("css/res/home/images/code.png")
+            }
+            .code-act {
+                background-image: url("css/res/home/images/code-act.png")
+            }
+            .home {
+                background-image: url("css/res/home/images/home.png")
+            }
+            .home-act {
+                background-image: url("css/res/home/images/home-act.png")
+            }
+            .tab_m .item {
+                padding-bottom: 0.2em
+            }
+        </style>
+    </head>
+    <body class="um-vp" ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head">
+                <div class="nav-btn fa fa-bars" id="nav-left"></div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">AppCan Native 开发助手</h1>
+                <div class="nav-btn" id="nav-right">
+                    <!--按钮开始-->
+
+                    <!--按钮结束-->
+                </div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l ">
+
+            </div>
+            <!--content结束-->
+            <div id="tabview" class="uf sc-bg ubt sc-border-tab"></div>
+
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+        <script src="js/appcan.tab.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            var titHeight = $('#header').offset().height;
+             appcan.locStorage.val("titHeight",titHeight);
+            var footHeight = $('#tabview').offset().height;
+            var pageHeight = $('#page_0').offset().height;
+            var Height = pageHeight - titHeight - footHeight;
+            uexWindow.openPopover("index", 0, "dev4_content.html", "", 0, titHeight, '', Height, '', 0, 0);
+            ////
+            // uexWindow.openPopover("index", 0, "index_content.html", "", 0, titHeight, '', Height, '', 0, 0);
+            // appcan.frame.open("content", "index_content.html", 0, titHeight);
+            window.onorientationchange = window.onresize = function(){
+                appcan.frame.resize("content", 0, titHeight);
+            }
+            openSliding();
+            var param = {
+                isSupport : true
+            };
+            uexWindow.setIsSupportSwipeCallback(JSON.stringify(param));
+            uexWindow.onSwipeRight = function() {
+                showSliding();
+            }
+        });
+        var tabview = appcan.tab({
+            selector : "#tabview",
+            hasIcon : true,
+            hasAnim : false,
+            hasLabel : true,
+            hasBadge : false,
+            data : [
+            // {
+                // label : "基本功能",
+                // "icon" : "tabicon home-act ub-img"
+            // },
+            {
+                label : "基本功能4.0",
+                "icon" : "tabicon basic-act ub-img"////
+            }, {
+                label : "案例分享",
+                "icon" : "tabicon code ub-img"
+            }]
+        });
+        tabview.on("click", function(obj, index) {
+            var titHeight = $('#header').offset().height;
+            var footHeight = $('#tabview').offset().height;
+            var pageHeight = $('#page_0').offset().height;
+            var Height = pageHeight - titHeight - footHeight;
+                
+            // if (index == 0) {
+                // $("#header h1").text("AppCan Native 开发助手")
+                // $(".tabicon").eq(0).removeClass("home").addClass("home-act");
+                // $(".tabicon").eq(1).removeClass("basic-act").addClass("basic");
+                // $(".tabicon").eq(2).removeClass("code-act").addClass("code");
+                // uexWindow.openPopover("index", 0, "index_content.html", "", 0, titHeight, '', Height, '', 0, 0);
+                // uexWindow.bringPopoverToFront("index");
+                // // appcan.window.open("index", "index.html")
+            // } else 
+            if (index == 0) {
+                //$("#header h1").text("基本功能4.0")
+                // $(".tabicon").eq(0).removeClass("home-act").addClass("home");
+                $(".tabicon").eq(0).removeClass("basic").addClass("basic-act");////
+                $(".tabicon").eq(1).removeClass("code-act").addClass("code");
+                // appcan.window.open("sample","sample.html")
+                uexWindow.openPopover("dev4", 0, "dev4_content.html", "", 0, titHeight, '', Height, '', 0, 0);
+                uexWindow.bringPopoverToFront("dev4");
+            }else if (index == 1) {
+                //$("#header h1").text("案例分享")
+                // $(".tabicon").eq(0).removeClass("home-act").addClass("home");
+                $(".tabicon").eq(0).removeClass("basic-act").addClass("basic");
+                $(".tabicon").eq(1).removeClass("code").addClass("code-act");
+                ////
+                // uexWindow.openPopover("sample", 0, "sample_content.html", "", 0, titHeight, '', Height, '', 0, 0);
+                // uexWindow.bringPopoverToFront("sample");
+            }
+        })
+        function openSliding() {
+            var paramss = {
+                leftSliding : {
+                    width : screen.availWidth / 1.6,
+                    url : "slide.html",
+                }
+            };
+            var paramStr = JSON.stringify(paramss);
+            uexWindow.setSlidingWindow(paramStr);
+            // uexWindow.setSlidingWindowEnabled(1);
+        }
+
+        function showSliding() {
+            var params = {
+                mark : 0
+            };
+            var paramStr = JSON.stringify(params);
+            uexWindow.toggleSlidingWindow(paramStr);
+        }
+
+
+        appcan.button("#nav-left", "btn-act", function() {
+            showSliding()
+        })
+    </script>
+</html>

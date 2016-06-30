@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/themes/pastie.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            .bc-bg {
+                background-color: #fff;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <pre><code data-language="javascript">var commonCallback = function(data) {
+    alert("callback:" + JSON.stringify(data));
+}
+function vibrate() {
+    uexDevice.vibrate("500")
+}
+
+function cancelVibrate() {
+    uexDevice.cancelVibrate()
+}
+
+function getInfo() {
+    var arr = {
+        '系统版本' : "1",
+        '厂商信息' : "2",
+        'IMEI信息' : "10",
+        '网络状态' : "13",
+        '磁盘空间' : "14",
+        '运营商名称' : "15",
+        'DeviceToken' : "11",
+        'UUID' : "20",
+        '型号' : "17",
+        '分辨率' : "18"
+    };
+    for (var i in arr) {
+        var data = uexDevice.getInfo(arr[i]);
+        var device = eval('(' + data + ')');
+
+        var osVersion = device.os;
+        if (osVersion != null && osVersion.length > 0) {
+            $("<div>系统版本:" + osVersion + '</div>').appendTo($('#info'))
+        }
+        var manufacturer = device.manufacturer;
+        if (manufacturer != null && manufacturer.length > 0) {
+            $("<div>厂商信息:" + manufacturer + '</div>').appendTo($('#info'))
+        }
+
+        var imei = device.imei;
+        if (imei != null && imei.length > 0) {
+            $("<div>IMEI信息:" + imei + '</div>').appendTo($('#info'))
+        }
+        var deviceToken = device.deviceToken;
+        if (deviceToken != null && deviceToken.length > 0) {
+            $("<div>DeviceToken:" + deviceToken + '</div>').appendTo($('#info'))
+        }
+
+        var connectStatus = device.connectStatus;
+        if (connectStatus != null && connectStatus.length > 0) {
+            if (connectStatus == -1) {
+                $("<div>网络状态:网络不可用</div>").appendTo($('#info'))
+            } else if (connectStatus == 0) {
+                $("<div>网络状态:WIFI网络</div>").appendTo($('#info'))
+            } else if (connectStatus == 1) {
+                $("<div>网络状态:3G网络</div>").appendTo($('#info'))
+            } else if (connectStatus == 2) {
+                $("<div>网络状态:2G网络</div>").appendTo($('#info'))
+            }
+        }
+        var restDiskSize = device.restDiskSize;
+        if (restDiskSize != null && restDiskSize.length > 0) {
+            $("<div>磁盘空间:" + restDiskSize + '</div>').appendTo($('#info'))
+        }
+        var operatorName = device.mobileOperatorName;
+        if (operatorName != null && operatorName.length > 0) {
+            $("<div>运营商名称:" + operatorName + '</div>').appendTo($('#info'))
+        }
+
+        var model = device.model;
+        if (model != null && model.length > 0) {
+            $("<div>型号:" + model + '</div>').appendTo($('#info'))
+        }
+        var resolutionRatio = device.resolutionRatio;
+        if (resolutionRatio != null && resolutionRatio.length > 0) {
+            $("<div>分辨率:" + resolutionRatio + '</div>').appendTo($('#info'))
+        }
+    }
+}
+
+
+
+function screenCapture() {
+    uexDevice.screenCapture(0.8, function(data) {
+        alert(JSON.stringify(data));
+    });
+}
+
+function setVolume() {
+    uexDevice.setVolume('1')
+}
+
+function getVolume() {
+    alert(uexDevice.getVolume())
+}
+
+function setScreenAlwaysBright() {
+    uexDevice.setScreenAlwaysBright(1)
+}
+
+function setScreenBrightness() {
+    uexDevice.setScreenBrightness(0.9)
+}
+
+function getScreenBrightness() {
+    alert(uexDevice.getScreenBrightness())
+}
+
+function openWiFiInterface() {
+    uexDevice.openWiFiInterface()
+}
+
+function isFunctionEnable() {
+    uexDevice.isFunctionEnable({
+        setting : "GPS"
+    }, commonCallback);
+}
+
+function openSetting() {
+    uexDevice.openSetting({
+        setting : "GPS"
+    }, commonCallback);
+}</code></pre>
+    </body>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/rainbow.min.js"></script>
+    <script src="../../../js/javascript.js"></script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("single",1)
+        });
+
+        appcan.button(".play", "btn-act", function() {
+            appcan.window.closePopover("source")
+            appcan.locStorage.val("single",0)
+            // appcan.window.open("play","index.html");
+            // var titHeight = appcan.locStorage.val("titHeight");
+            // appcan.window.openPopover("scrawlIndex", "0", "index_content.html", '', 0, titHeight, '', '', '', '');
+            // appcan.window.publish("changeHeader", "play");
+        })
+
+    </script>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <style type="text/css">
+        #listview{background-color: #fff;}
+        .nb{background-image:url("css/res/sample/todayLogo.png");width: 2em;height: 2em }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="listview"  class="ubt bc-border sc-bg">
+</div>
+
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+   <script src="js/appcan.listview.js"></script>
+ </body>
+    <script>
+        appcan.ready(function() {
+        })
+   var lv = appcan.listview({
+    selector : "#listview",
+    type : "thinLine",
+    hasSubTitle:false,
+    hasAngle:false,
+    hasIcon:true
+});
+lv.set([{
+    icon:"css/res/sample/images/todayLogo.png",
+    title : "今日头条",
+    subTitle :"uexNBListView",
+    id:""
+}])
+lv.on("click",function(ele,obj,curEle){
+        appcan.window.open("uexNBListView", "demos/uexNBListView/index.html", 10)
+        // uexWidget.startWidget('11534626','0','widgetDidFinish','open a widget',300)
+})
+ </script>
+</html>

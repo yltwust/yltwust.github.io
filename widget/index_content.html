@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <style type="text/css">
+            .row{border-bottom:1px solid #E5E5E5;}
+            .extend,.third{border: 1px solid #E5E5E5;border-bottom: none;border-top: none;}
+            .row .grid{width: 33%;height: 33.3%;text-align: center;background-color: #fff;padding:2em 0 1.4em 0}
+            .row .grid .text{font-size: 0.8em;color: #999ba4;}
+            .icon{width: 2.4em;height: 2.4em;margin: 0 auto;margin-bottom: 1em;}
+            .engine .icon{background-image: url("css/res/home/images/engine.png")}
+            .extend .icon{background-image: url("css/res/home/images/extend.png")}
+            .sys .icon{background-image: url("css/res/home/images/sys.png")}
+            .ui .icon{background-image: url("css/res/home/images/ui.png")}
+            .third .icon{background-image: url("css/res/home/images/third.png")}
+            .net .icon{background-image: url("css/res/home/images/net.png")}
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="container ub ub-ver">
+            <div class="row ub">
+                <div class="engine grid">
+                    <div class="icon ub-img"></div>
+                    <div class="text">
+                        应用引擎
+                    </div>
+                </div>
+                <div class="extend grid">
+                    <div class="icon ub-img"></div>
+                    <div class="text">
+                        功能扩展
+                    </div>
+                </div>
+                <div class="sys grid">
+                    <div class="icon ub-img"></div>
+                    <div class="text">
+                        系统功能
+                    </div>
+                </div>
+            </div>
+            <div class="row ub">
+                <div class="ui grid">
+                    <div class="icon ub-img"></div>
+                    <div class="text">
+                        界面布局
+                    </div>
+                </div>
+                <div class="third grid">
+                    <div class="icon ub-img"></div>
+                    <div class="text">
+                        第三方SDK
+                    </div>
+                </div>
+                <div class="net grid">
+                    <div class="icon ub-img"></div>
+                    <div class="text">
+                        网络通讯
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/appcan.js"></script>
+        <script src="js/appcan.control.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("isDev4",0);
+        })
+        appcan.button(".extend","btn-act",function(){
+            uexWindow.open("extend",0,"extend.html",10,'','',1024)
+        })
+        appcan.button(".third","btn-act",function(){
+            uexWindow.open("thirdSDK",0,"thirdSDK.html",10,'','',1024)
+        })
+        appcan.button(".sys","btn-act",function(){
+            uexWindow.open("sys",0,"sys.html",10,'','',1024)
+        })
+        appcan.button(".ui","btn-act",function(){
+            uexWindow.open("ui",0,"ui.html",10,'','',1024)
+        })
+    </script>
+</html>

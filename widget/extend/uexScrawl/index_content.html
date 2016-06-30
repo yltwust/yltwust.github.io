@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../css/ui-box.css">
+        <link rel="stylesheet" href="../../css/ui-base.css">
+        <link rel="stylesheet" href="../../css/ui-color.css">
+        <link rel="stylesheet" href="../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart style="background: #ECEDF1">
+        <div id="dot">
+            <img src="../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <div class="ub ub-ver" id="wait" style="padding-bottom:2.5em;">
+            <div class="ub ub-ac ub-pc" style='color:#9A9B9D;margin:0.5em' id="time"></div>
+            <div class="ub uinn">
+                <img name="avatar" src="images/5.jpg" alt="" style="width: 3em;border-radius: 1.5em;" />
+                <div id="" class="ub ub-ver ub-f1">
+                    <!-- <p style='color:#919295;font-size: .9em;margin:0 .5em'>小花同学</p> -->
+                    <div class="triangle-left"></div>
+                    <div class="ub word" style="background: #fff;padding:.5em;margin:.5em;border-radius: .6em;width:2.5em;">
+                        hello!
+                    </div>
+                </div>
+            </div>
+            <div class="ub ub-pe uinn">
+                <div class="ub ub-f1"></div>
+                <div class="ub ub-f1">
+                    <div class="ub ub-f1"></div>
+                    <div id="" class="ub ub-ver">
+                        <div class="triangle-right"></div>
+                        <!-- <p class="ub ub-pe" style='color:#919295;font-size: .9em;margin:0 .5em'>喵星人</p> -->
+                        <div class="ub ub-pe word-rev" style="background: #fff;padding:.5em;margin:.5em;border-radius: .6em;width:3.3em;">
+                            lalalala!
+                        </div>
+                    </div>
+                    <img name="avatar" src="images/4.jpg" alt="" style="width: 3em;border-radius: 1.5em;" />
+                </div>
+            </div>
+            <div class="ub uinn">
+                <img name="avatar" src="images/5.jpg" alt="" style="width: 3em;border-radius: 1.5em;" />
+                <div id="" class="ub ub-ver ub-f1">
+                    <div class="triangle-left"></div>
+                    <!-- <p style='color:#919295;font-size: .9em;margin:0 .5em'>小花同学</p> -->
+                    <div class="ub word" style="background: #fff;padding:.5em;margin:.5em;border-radius: .6em;width:6.2em;">
+                        发个涂鸦给我
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="footer">
+            <div class="ub ub-ver" style="position: fixed;width: 100%;bottom: 0">
+                <div class="ub" onclick="addpic();" style="width: 100%;background: #ECEDF1;padding-top:.5em;">
+                    <div class="ub ub-f1" id="consult" style="height: 1.8em;background-color: #FFFFFF;border-radius: .3em;width:75%;margin-left:.5em;"></div>
+                    <img src="images/add.png" style="width: 2em;">
+                </div>
+                <div class="ub ub-pc ub-ver uhide" id="img" style="width: 100%;background:#fff">
+                    <img src="images/111.png" style="width:100%">
+                    <div class="ub ub-ver ub-f1" style="padding:1em 2em;">
+                        <img src="images/photo.png" id="photo" style="width: 3em;" />
+                        <p style="color:#6C6C6C;font-size: .9em;width: 3em;text-align:center ">
+                            相册
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+        <script src="../../js/jquery.1.7.2.min.js"></script>
+        <script src="../../js/jquery.event.ue.js.js"></script>
+        <script src="../../js/jquery.udraggable.js"></script>
+        <script>
+            var jq = $.noConflict();
+        </script>
+        <script src="../../js/appcan.js"></script>
+        <script src="../../js/appcan.control.js"></script>
+        <script src="../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            var myDate = new Date();
+            var time = myDate.getHours() + ":" + myDate.getMinutes();
+            $("#time").html(time);
+            uexScrawl.cbSave = function(data) {
+                var data1 = JSON.parse(data).savePath;
+                addnews(data1);
+            }
+        })
+        // $("#dot img").on("click", function() {
+            // $(".menu").toggleClass("uhide")
+        // })
+        
+        // appcan.button(".source","btn-act",function(){
+            // // appcan.window.open("source","source.html");
+            // var titHeight = appcan.locStorage.val("titHeight");
+            // appcan.window.openPopover("source","0","source_content.html",'',0,titHeight,'','','','')
+            // appcan.window.publish("changeHeader","source");
+        // })
+        // appcan.button(".return","btn-act",function(){
+            // // appcan.window.open("scrawlapi","api.html");
+            // appcan.window.publish("close",0);
+            // // appcan.window.close(-1);
+        // })
+        function addnews(data) {
+            var image;
+            if (uexWidgetOne.platformName == "iOS") {
+                // alert(data);
+                // var s=[];
+                // s=data.split("uexScrawl");
+                // var img=s[1];
+                // image="wgt://uexScrawl"+img;
+                image = data;
+            } else {
+                var s = [];
+                s = data.split("/0/");
+                var img = s[1];
+                image = "file:///sdcard/" + img;
+            }
+            var html = "";
+            html += '<div class="ub ub-pe uinn">' + '<div class="ub ub-f1"></div>' + '<div class="ub ub-f1">' + '<div class="ub ub-f1"></div>' + '<div id="" class="ub ub-ver">'
+            // +     '<p class="ub ub-pe" style="color:#919295;font-size: .9em;margin:0 .5em">喵星人</p>'
+            +'<div class="ub ub-pe" style="background: #fff;padding:.5em;margin:.5em;border-radius: .6em;width:8em;">' + '<img src="' + image + '" onclick="openimg(' + "'" + image + "'" + ');"  style="width:8em;"/>' + '</div>' + '</div>' + '<img name="avatar" src="images/4.jpg" alt="" style="width: 3em;border-radius: 1.5em;" />' + '</div>' + '</div>';
+            $("#wait").append(html);
+        }
+
+        function addpic() {
+            $("#img").toggleClass('uhide');
+        }
+
+        function openimg(img) {
+            appcan.locStorage.setVal("myimg", img);
+            appcan.frame.open('bigimage', 'bigimage.html', 0);
+        }
+
+
+        appcan.button("#photo", "btn-act", function() {
+            var data = {
+                min : 1,
+                max : 1,
+                quality : 0.5,
+                detailedInfo : false
+            }
+            var json = JSON.stringify(data);
+            uexImage.openPicker(json);
+            uexImage.onPickerClosed = function(info) {
+                var img_url = JSON.parse(info).data[0];
+                var params = {
+                    "src" : img_url
+                };
+                uexScrawl.open(JSON.stringify(params));
+            }
+            $("#img").addClass('uhide');
+        })
+    </script>
+</html>

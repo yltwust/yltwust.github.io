@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+
+    </body>
+
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.remove("index");
+            uexActionSheet.onClickItem = function(data) {
+                alert("onClickItem" + data);
+            }
+            uexWidgetOne.cbError = function(opid, type, error) {
+                alert(error);
+
+            }
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "createActionSheet",
+            subTitle : "打开菜单",
+            id : "1"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            switch(obj.id) {
+            case "1":
+                createActionSheet();
+                break;
+            }
+        })
+        function createActionSheet() {
+            var x = 0;
+            var y = 0;
+            var width = 0;
+            var height = 0;
+            //var JsonData = '{"actionSheet_style":{"frameBgColor":"#ffffff","frameBroundColor":"#ff0000","frameBgImg":"","btnSelectBgImg":"res://btn-act.png","btnUnSelectBgImg":"res://btn.png","cancelBtnSelectBgImg":"res://cancel-act.png","cancelBtnUnSelectBgImg":"res://cancel.png","textSize":"17","textNColor":"#ffffff","textHColor":"#ffffff", "cancelTextNColor":"#ffffff","cancelTextHColor":"#ffffff", "actionSheetList":[{"name":"新浪微博"},{"name":"腾讯微博"},{"name":"分享"}]}}';
+            var data = {
+                actionSheet_style : {
+                    frameBgColor : "#ffffff",
+                    frameBroundColor : "#ff0000",
+                    frameBgImg : "",
+                    btnSelectBgImg : "res://btn-act.png",
+                    btnUnSelectBgImg : "res://btn.png",
+                    cancelBtnSelectBgImg : "res://cancel-act.png",
+                    cancelBtnUnSelectBgImg : "res://cancel.png",
+                    textSize : "17",
+                    textNColor : "#ffffff",
+                    textHColor : "#ffff00",
+                    cancelTextNColor : "#ffffff",
+                    cancelTextHColor : "#000fff",
+                    actionSheetList : [{
+                        name : "百度"
+                    }, {
+                        name : "阿里"
+                    }, {
+                        name : "腾讯"
+                    }]
+                }
+            }
+            var JsonData = JSON.stringify(data);
+            uexActionSheet.open(x, y, width, height, JsonData);
+        }
+
+    </script>
+</html>

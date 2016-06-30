@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+    </body>
+
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.remove("index");
+            uexGaodeNavi.onArriveDestination = function() {
+                alert("onExitNavi");
+            }
+            uexGaodeNavi.onGetNavigationText = function(param) {
+                alert(param);
+            }
+            uexGaodeNavi.onReCalculateRouteForTrafficJam = function() {
+                alert("onReCalculateRouteForTrafficJam");
+            }
+            uexGaodeNavi.onReCalculateRouteForYaw = function() {
+                alert("onReCalculateRouteForYaw");
+            }
+            uexGaodeNavi.onStartNavi = function() {
+                alert("onStartNavi");
+            }
+            uexGaodeNavi.onNaviCancel = function() {
+                alert("onNaviCancel");
+            }
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "init",
+            subTitle : "初始化",
+            id : "1"
+        }, {
+            title : "calculateWalkRoute",
+            subTitle : "开始步行路径规划",
+            id : "2"
+        }, {
+            title : "calculateDriveRoute",
+            subTitle : "开始驾车路径规划",
+            id : "3"
+        }, {
+            title : "startNavi",
+            subTitle : "开始导航",
+            id : "4"
+        }, {
+            title : "stopNavi",
+            subTitle : "停止导航",
+            id : "5"
+        }])
+
+        lv.on("click", function(ele, obj, curEle) {
+            var name = obj.title;
+            eval(name + "()");
+        });
+
+        function init() {
+            var params = {
+                appKey : "056b84a843f3b43a2cbd1209b885665e"
+            }
+            var data = JSON.stringify(params);
+            uexGaodeNavi.init(data, function(result) {
+                alert(JSON.stringify(result))
+            });
+        }
+
+        function calculateWalkRoute() {
+            var params = {
+                startPoint : [39.925846, 116.432765],
+                endPoint : [39.925041, 116.437901]
+            };
+            var data = JSON.stringify(params);
+            uexGaodeNavi.calculateWalkRoute(data, function(result) {
+                alert(JSON.stringify(result))
+            });
+        }
+
+        function calculateDriveRoute() {
+            var params = {
+                startPoint : [39.925846, 116.432765],
+                wayPoints : [[39.925846, 116.432345], [39.925846, 116.432789]],
+                endPoint : [39.925041, 116.437901]
+            }
+            var data = JSON.stringify(params);
+            uexGaodeNavi.calculateDriveRoute(data, function(result) {
+                alert(JSON.stringify(result))
+            });
+        }
+
+        function startNavi() {
+            var params = {
+                type : 1
+            };
+            var data = JSON.stringify(params);
+            uexGaodeNavi.startNavi(data);
+        }
+
+        function stopNavi() {
+            startNavi()
+            window.setTimeout(function() {
+                uexGaodeNavi.stopNavi()
+            }, 5000);
+        }
+        
+
+    </script>
+</html>

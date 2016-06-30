@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../css/ui-box.css">
+        <link rel="stylesheet" href="../../css/ui-base.css">
+        <link rel="stylesheet" href="../../css/ui-color.css">
+        <link rel="stylesheet" href="../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../css/themes/pastie.css">
+        <link rel="stylesheet" href="../../css/my.css">
+        <style type="text/css">
+            .bc-bg {
+                background-color: #fff;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <pre><code data-language="javascript">var cText = 0;
+var cJson = 1;
+var cInt = 2;
+
+var dbName; 
+function createDB(){
+    dbName = "uexDB";
+    uexDataBaseMgr.openDataBase(dbName,1);
+    uexDataBaseMgr.cbOpenDataBase = createDBCallBack;
+}
+function createDBCallBack(opid,type,data){
+    switch(type){
+        case cText:
+        alert("uex.cText");
+        break;
+        case cJson:
+        alert("uex.cJson");
+        break;
+        case cInt:
+        if(opid == 1 &&type == 2&&data == 0){
+            alert("数据库打开成功！");
+        }else{
+            alert("数据库打开失败！");
+        }
+        break;
+        default:
+        alert("error"); 
+    }
+};
+
+function deleteTable(){
+    uexDataBaseMgr.executeSql(dbName,1,"DROP TABLE testTable");
+    uexDataBaseMgr.cbExecuteSql = deleteTableCallBack;
+}
+function deleteTableCallBack(opid,type,data){
+    switch(type){
+        case cText:
+        alert("uex.cText");
+        break;
+        case cJson:
+        alert("uex.cJson");
+        break;
+        case cInt:
+        if(opid == 1 &&type == 2&&data == 0){
+            console.log("删除表成功！");
+        }else{
+            console.log("删除表失败！");
+        }
+        break;
+        default:
+        alert("error");
+    }
+};
+
+function insertData(){
+    uexDataBaseMgr.executeSql(dbName,1,"INSERT INTO testTable (_id,name,data) VALUES ('2','这是测试','这是测试')");
+    uexDataBaseMgr.cbExecuteSql = insertDataCallBack;
+}   
+function insertDataCallBack(opid,type,data){
+    switch(type){
+        case cText:
+        alert("uex.cText");
+        break;
+        case cJson:
+        alert("uex.cJson");
+        break;
+        case cInt:
+        if(opid == 1&&type == 2 &&data == 0){
+            alert("数据插入成功！");
+        }else{
+            alert("数据插入失败！");
+        }
+        break;
+        default:
+        alert("error");  
+    }
+};
+
+function selectData(){
+    uexDataBaseMgr.selectSql(dbName,1,"SELECT * FROM testTable");
+    uexDataBaseMgr.cbSelectSql = selectDataCallBack;
+} 
+function selectDataCallBack(opid,type,value){
+    switch(type){
+        case cText:
+        alert("uex.cText");
+        break;
+        case cJson:
+        if(opid == 1 && type == 1){
+            var jsonList=eval("("+value+")");
+            if(jsonList.length == 0){
+                alert("无数据");
+            }
+            var len = jsonList.length;
+            <!-- for(var i=0;i<len;i++){
+
+               　　　　      for(var key in jsonList[i]){
+                   　　                                 alert("key："+key+",value："+jsonList[i][key]); 
+               }
+           }  -->
+       }else{
+           alert("查询失败！");
+       }
+       break;
+       case cInt:
+       alert("uex.cInt"); 
+       break;
+       
+       default:
+       alert("error");  
+
+   }
+
+};
+function transaction(){
+    uexDataBaseMgr.transaction(dbName,1,inFunc);
+    uexDataBaseMgr.cbTransaction = transactionCallBack;
+}
+function transactionCallBack(opid,type,data){
+    switch(type){
+        case cText:
+        alert("uex.cText");
+        break;
+        case cJson:
+        alert("uex.cJson");
+        break;
+        case cInt:
+        if(opid == 1&&type == 2  &&data == 0){
+            alert("事务提交成功！");
+        }else{
+            alert("事务提交失败！");
+        } 
+        break;
+        default:
+        alert("error");  
+    }
+};
+
+function closeDataBase(){
+    uexDataBaseMgr.closeDataBase(dbName,1);
+    uexDataBaseMgr.cbCloseDataBase = closeDataBaseCallBack;
+}
+function closeDataBaseCallBack(opid,type,data){
+    switch(type){
+        case cText:
+        alert("uex.cText");
+        break;
+        case cJson:
+        alert("uex.cJson");
+        break;
+        case cInt:
+        if(opid == 1 &&type == 2&&data == 0){
+            alert("数据库关闭成功！");
+        }else{
+            alert("数据库关闭失败！");
+        }
+        break;
+        default:
+        alert("error");
+    }
+};    
+            </code></pre>
+    </body>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../js/jquery.event.ue.js.js"></script>
+    <script src="../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../js/rainbow.min.js"></script>
+    <script src="../../js/javascript.js"></script>
+    <script src="../../js/appcan.js"></script>
+    <script src="../../js/appcan.control.js"></script>
+    <script src="../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+        });
+
+        appcan.button(".play", "btn-act", function() {
+            appcan.window.closePopover("source")
+            // appcan.window.open("play","index.html");
+            // var titHeight = appcan.locStorage.val("titHeight");
+            // appcan.window.openPopover("scrawlIndex", "0", "index_content.html", '', 0, titHeight, '', '', '', '');
+            // appcan.window.publish("changeHeader", "play");
+        })
+
+    </script>
+</html>

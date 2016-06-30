@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+        <br>
+        <div class="tcxx" id="percentage"></div>
+    </body>
+
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+    
+        appcan.ready(function() {
+            appcan.locStorage.remove("index");
+            $(".lis").eq(0).after('<div id="info1"></div>');
+            $(".lis").eq(1).after('<div id="info3"></div>');
+            $(".lis").eq(2).after('<div id="info2"><div id="info2_1"></div><div id="info2_2"></div></div>');
+            
+
+            //播放器状态  0-暂停中 1-缓冲中 2-播放中 3-发生错误
+            uexVideo.onPlayerStatusChange = function(info) {
+                //alert("onPlayerStatusChange:" + info);
+                var data = JSON.parse(info);
+                // if(data.status==0){
+                    // status="暂停中";
+                // }
+                // else if(data.status==1){
+                    // status="缓冲中";
+                // }
+                switch(data.status){
+                    case(0):status="暂停中";
+                    break;
+                    case(1):status="缓冲中";
+                    break;
+                    case(2):status="播放中";
+                    break;
+                    case(3):status="发生错误";
+                    break;
+                }
+                $("#info1").addClass("tcxx");
+                $("#info1").html("播放器状态:" + status);
+                //document.getElementById('info1').innerHTML = "播放器状态:" + data.status;
+            }
+
+            uexVideo.onPlayerClose = function(info) {
+                //alert("onPlayerClosed:" + info);
+                var data = JSON.parse(info);
+                $("#info3").addClass("tcxx");
+                $("#info3").html("播放路径:" + data.src + "<br>结束时的播放时间:" + data.currentTime);
+                // document.getElementById('info1').innerHTML = "播放路径:" + data.src + "\n结束时的播放时间:" + data.currentTime;
+            }
+            uexVideo.onRecordFinish = function(info) {
+                //alert("onRecordFinish:" + info);
+                var data = JSON.parse(info);
+                localPath = data.path;
+                $("#info2").addClass("tcxx");
+                //alert(localPath);
+                $("#info2_1").html("录制的视频地址:" + localPath);
+                //document.getElementById('info2').innerHTML = "压缩进度:" + progress + "\n录制的视频地址:" + localPath;
+            }
+
+           // 仅ios
+            uexVideo.onExportWithProgress = function(p) {
+                progress = p;
+                //$("#info2").addClass("tcxx");
+                //alert(progress);
+                $("#info2_2").html("压缩进度:" + progress);
+                //document.getElementById('info2').innerHTML = "压缩进度:" + progress + "\n录制的视频地址:" + localPath;
+            }
+            width_all=document.body.offsetWidth;
+            height_all=document.body.offsetHeight;
+            //alert(width_all*0.8);
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "openPlayer",
+            subTitle : "打开视频播放器(非全屏，可以测试关闭方法)",
+            id : "1"
+        }, {
+            title : "closePlayer",
+            subTitle : "关闭视频播放器",
+            id : "2"
+        }, {
+            title : "recordVideo",
+            subTitle : "打开视频录制界面",
+            id : "3"
+        }, {
+            title : "openPlayers",
+            subTitle : "打开视频播放器，播放录制的视频(全屏)",
+            id : "4"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            //直接根据标题来执行同名函数
+            //alert(JSON.stringify(obj));
+            //alert(obj.id);
+            if (obj.id == 1) {
+                //alert(1);
+                //path1 = "http://www.runoob.com/try/demo_source/mov_bbb.mp4";
+                path1 = "http://baobab.wdjcdn.com/1456734464766B(13).mp4";
+                
+            } else if (obj.id == 4) {
+                //alert(4);
+                path1 = localPath;
+            }
+            var name = obj.title;
+            eval(name + "()");
+        })
+        function recordVideo() {
+            //alert("recordVideo");
+            var params = {
+                maxDuration : 15,
+                qualityType : 1,
+                bitRateType : 2,
+                fileType : "mp4"
+            }
+            uexVideo.record(JSON.stringify(params));
+        }
+
+        function closePlayer() {
+            //alert("closePlayer");
+            uexVideo.closePlayer();
+        }
+
+        function openPlayer() {
+            //alert(width_all*0.8);
+            //alert("openPlayer");
+            //alert(path1);
+            var param = {
+                src : path1,
+                startTime : 1,
+                autoStart : true,
+                forceFullScreen : false,
+                showCloseButton : true,
+                showScaleButton : true,
+                width : width_all*0.8,
+                height : height_all*0.4,
+                x : width_all*0.1,
+                y : height_all*0.5,
+                scrollWithWeb : true,
+            }
+            uexVideo.openPlayer(JSON.stringify(param));
+        }
+        function openPlayers() {
+            //alert("openPlayer1");
+            //alert(path1);
+            var param = {
+                src : path1,
+                startTime : 1,
+                autoStart : true,
+                forceFullScreen : true,
+                showCloseButton : true,
+                showScaleButton : true,
+                width : 320,
+                height : 240,
+                x : 150,
+                y : 400,
+                scrollWithWeb : true,
+            }
+            uexVideo.openPlayer(JSON.stringify(param));
+        }
+    </script>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/appcan.icon.css">
+        <link rel="stylesheet" href="css/appcan.control.css">
+        <link rel="stylesheet" href="qupai/css/main.css">
+        <link rel="stylesheet" href="../../css/my.css">
+        <style type="text/css">
+            #header {
+                background: #2A89FF;
+                color: #FAFDFF
+            }
+            .sc-text-active {
+                color: #2A89FF !important;
+            }
+
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="page_0" class="up ub ub-ver" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head">
+                <div class="nav-btn" id="nav-left">
+                    <div class="fa fa-angle-left fa-2x"></div>
+                    <div class="text">
+                        返回
+                    </div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">record</h1>
+                <div class="nav-btn nav-bt" id="nav-right"></div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l t-bla c-wh">
+
+            </div>
+            <!--content结束-->
+            <div class="uinn-f uop" id="foot">
+                <div id="footer" class="uf t-bla ub tab t-wh ubt bc-border c-wh">
+
+                </div>
+                <div class="ub ub-ac ub-pc" id="camera">
+                    <div class="ub ub-ac ub-pc ub-img camera-bg uwh-pic umar-t-pic">
+                        <div class="camera ub-img uwh-tBtn"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="js/appcan.js"></script>
+    <script src="js/appcan.control.js"></script>
+    <script src="js/appcan.tab.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            var page = appcan.locStorage.val("index")
+            var titHeight = $('#header').offset().height;
+            appcan.locStorage.val("titHeight", titHeight);
+            var footHeight = $('#foot').offset().height;
+            appcan.locStorage.val("footHeight", footHeight);
+            var pageHeight = $('#page_0').offset().height;
+            appcan.locStorage.val("pageHeight", pageHeight);
+            var Height = pageHeight - titHeight - footHeight;
+            appcan.locStorage.val("Height", Height);
+            if (page == "2" || page == "0") {
+                uexWindow.openPopover("qupai", 0, "index_content.html", "", 0, titHeight, '', Height, '', 0, 0);
+            }else if (page == "1") {
+                uexWindow.openPopover("shezhi", 0, "config.html", "", 0, titHeight, '', Height, '', 0, 0);
+                $(".sc-text-tab").eq(0).removeClass("sc-text-active");
+                $(".sc-text-tab").eq(2).addClass("sc-text-active")
+            }
+            if(page=="2"){
+                camera()
+            }
+            $("#header h1").text(appcan.locStorage.val("qupaiHeader"))
+
+            var params = {
+                appKey : "207fc4bf069b548",
+                appSecret : "3821434e6903499a822ca16500586f0a",
+                space : "myqupai123"
+            }
+            uexQupai.init(JSON.stringify(params));
+            uexQupai.cbRecord = function(data) {
+                //alert(data);
+                var data = JSON.parse(data);
+                //alert(data.videoPath);
+                var path = data.videoPath;
+                var imgsrc = data.thumbPath;
+                // 安卓thumbnail
+                //alert(path);
+                //alert(imgsrc);
+                //$("#content").html(path+imgsrc);
+                appcan.locStorage.setVal("path", path);
+                appcan.locStorage.setVal("imgsrc", imgsrc);
+                //uexWindow.evaluatePopoverScript("","qupai","uexWindow.toast(0,5,'path',3000);");
+                uexWindow.evaluatePopoverScript("", "qupai", "show()");
+                // var titHeight = $('#header').offset().height;
+                // var footHeight = $('#foot').offset().height;
+                // var pageHeight=$('#page_0').offset().height;
+                // var Height=pageHeight-titHeight-footHeight;
+                // uexWindow.openPopover("qupai",0,"qupai_content.html","",0,titHeight,'',Height,'',0,0);
+                uexWindow.bringPopoverToFront("qupai");
+            }
+            uexQupai.cbInit = function(data) {
+                // alert(data);
+                // if(data.status=="0"){
+                // uexWindow.toast(0,5,"插件初始化成功（仅调试，打包注释掉）",3000);
+                // }
+                // else{
+                // alert("初始化失败");
+                // }
+            }
+            appcan.window.subscribe("close", function() {
+                appcan.window.close(-1);
+            });
+        });
+        var tabview = appcan.tab({
+            selector : "#footer",
+            hasIcon : true,
+            hasAnim : false,
+            hasLabel : true,
+            hasBadge : false,
+            index : 0,
+            data : [{
+                label : "首页",
+                icon : "fa-home"
+            }, {
+                label : "record",
+                icon : ""
+            }, {
+                label : "设置",
+                icon : "fa-laptop"
+            }]
+        });
+        tabview.on("click", function(obj, index) {
+            //appcan.window.selectMultiPopover("content", index);
+            //alert(index);
+
+            if (index == 0) {
+                var titHeight = $('#header').offset().height;
+                var footHeight = $('#foot').offset().height;
+                var pageHeight = $('#page_0').offset().height;
+                var Height = pageHeight - titHeight - footHeight;
+                uexWindow.openPopover("qupai", 0, "index_content.html", "", 0, titHeight, '', Height, '', 0, 0);
+                uexWindow.bringPopoverToFront("qupai");
+                $("#header h1").text("record")
+
+                //uexWindow.openPopover("qupai",0,"qupai_content.html","",0,titHeight,'',Height,'',0,0);
+            } else if (index == 2) {
+                var titHeight = $('#header').offset().height;
+                var footHeight = $('#foot').offset().height;
+                var pageHeight = $('#page_0').offset().height;
+                var Height = pageHeight - titHeight - footHeight;
+                uexWindow.openPopover("shezhi", 0, "config.html", "", 0, titHeight, '', Height, '', 0, 0);
+                uexWindow.bringPopoverToFront("shezhi");
+                $("#header h1").text("config")
+            }
+            var header = $("#header h1").text();
+            if (header == "record") {
+                appcan.locStorage.val("index", "2")
+            } else if (header == "init") {
+                appcan.locStorage.val("index", "0")
+            }
+        })
+        appcan.button("#camera", "btn-act", function() {
+            camera()
+        })
+        
+        function camera(){
+            uexWindow.evaluatePopoverScript("", "qupai", "close()");
+            var minDuration = appcan.locStorage.val('minDuration');
+            var maxDuration = appcan.locStorage.val('maxDuration');
+            //alert(minDuration);
+            if (minDuration == null) {
+                var minDuration = 1;
+            }
+            //alert(maxDuration);
+            if (maxDuration == null) {
+                var maxDuration = 20;
+            }
+            //alert(minDuration);
+            //alert(maxDuration);
+            var params = {
+                minDuration : minDuration,
+                maxDuration : maxDuration
+            }
+            uexQupai.config(JSON.stringify(params));
+            record();
+        }
+        
+        function record() {
+            uexQupai.record();
+        }
+
+
+        appcan.button("#nav-left", "btn-act", function() {
+            appcan.window.close(-1);
+        })
+    </script>
+</html>

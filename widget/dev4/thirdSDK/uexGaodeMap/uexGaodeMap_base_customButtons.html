@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/new.css">
+        <style>
+            input {
+                color: black;
+                padding: 1px 6px;
+                margin-left: 8px;
+            }
+            input[type="text"] {
+                padding: .2em .2em;
+                margin: .2em .2em;
+                font-size: 1em;
+            }
+            input[type="button"] {
+                padding: .2em .2em;
+                margin: .2em .2em;
+                font-size: 1em;
+            }
+        </style>
+    </head>
+    <body class="um-vp " ontouchstart>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub bc-head">
+                <div class="nav-btn" id="nav-left" onclick="closeWin()">
+                    <div class="fa fa-angle-left fa-2x"></div>
+                    <div class="text">
+                        返回
+                    </div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">自定义按钮功能</h1>
+                <div class="nav-btn nav-bt" id="nav-right">
+                    <!-- <div class="fa fa-book"></div> -->
+                </div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l t-bla">
+                <div class="conbor">
+                    <div class="consj" id="topDiv" style="color:black;">
+                        <div class="ub ub-hor ub-pc" id="height">
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="openmap();">
+                                    打开
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="closeMap();">
+                                    关闭
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="setButtons();">
+                                    设置按钮
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ub ub-hor ub-pc" id="height">
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="deleteButtons(1);">
+                                    删除按钮1
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="deleteButtons(2);">
+                                    删除按钮2
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="showButtons(1);">
+                                    显示按钮1
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ub ub-hor ub-pc" id="height">
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="showButtons(2);">
+                                    显示按钮2
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="hideButtons(1);">
+                                    隐藏按钮1
+                                </div>
+                            </div>
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="hideButtons(2);">
+                                    隐藏按钮2
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ub ub-hor ub-pc" id="height">
+                            <div class="uin  ub-f1 ">
+                                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc " onclick="hideButtons(3);">
+                                    隐藏所有按钮
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--content结束-->
+
+        </div>
+        <script src="../../../js/appcan.js"></script>
+        <script src="../../../js/appcan.control.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            uexWidgetOne.cbError = function(opid, type, data) {
+                alert(data);
+            }
+            uexGaodeMap.onSDKReceiverError = function makerListner(json) {
+                alert("onSDKReceiverError: " + json);
+            }
+            uexGaodeMap.onMapClickListener = function(json) {
+                alert("onMapClickListener:" + json);
+            }
+            uexGaodeMap.onMapLongClickListener = function(json) {
+                alert("onMapLongClickListener:" + json);
+            }
+            // uexGaodeMap.cbHideCustomButtons = function(json) {
+            // alert("cbHideCustomButtons:" + json);
+            // }
+            // uexGaodeMap.cbSetCustomButton = function(json) {
+            // alert("cbSetCustomButton:" + json);
+            // }
+            // uexGaodeMap.cbDeleteCustomButton = function(json) {
+            // alert("cbDeleteCustomButton:" + json);
+            // }
+            uexGaodeMap.cbRemoveCustomButton = function(json) {
+                alert("cbRemoveCustomButton:" + json);
+            }
+            // uexGaodeMap.cbShowCustomButtons = function(json) {
+            // alert("cbShowCustomButtons:" + json);
+            // }
+            uexGaodeMap.onCustomButtonClick = function(json) {
+                alert("onCustomButtonClick:" + json);
+            }
+            uexGaodeMap.onMapLoadedListener = onMapLoadedListener;
+        });
+        // var commonCallback = function(data) {
+        // alert("commonCallback:" + JSON.stringify(data));
+        // };
+        function closeWin() {
+            uexWindow.close(-1);
+        }
+
+        function onMapLoadedListener() {
+            uexWindow.toast(0, 5, "地图加载完成", 1000);
+        }
+
+        function closeMap() {
+            uexGaodeMap.close();
+        }
+
+        function openmap() {
+            var divTop = document.getElementById("topDiv").offsetTop + document.getElementById("topDiv").offsetHeight + 70;
+            var w = screen.availWidth - 20;
+            var h = screen.availHeight / 2;
+            var params = {
+                left : 10,
+                top : divTop,
+                width : w,
+                height : h,
+                longitude : 114.402815,
+                latitude : 30.475798
+            };
+            var data = JSON.stringify(params);
+            uexGaodeMap.open(data);
+        }
+
+        function setButtons() {
+            for (var i = 1; i < 5; i++) {
+                var param = {
+                    id : "1" + i.toString(), //String 必选 按钮的唯一标识符
+                    bgImage : "res://button1.png", //String 必选 按钮背景图路径
+                    title : "t" + i.toString(), //String 可选 按钮文字
+                    titleColor : "#" + (3 * i - 3).toString() + "00", // String 可选 按钮文字颜色
+                    x : 50, //必选
+                    y : 10 + 40 * i, //必选
+                    width : 35, //必选
+                    height : 16//必选
+                }
+                var jsonStr = JSON.stringify(param)
+                var result = uexGaodeMap.setCustomButton(jsonStr);
+                alert("result:" + JSON.stringify(result));
+            }
+
+            var param = {
+                id : "20", //String 必选 按钮的唯一标识符
+                bgImage : "res://button2.png", //String 必选 按钮背景图路径
+                x : 200, //必选
+                y : 100, //必选
+                width : 39, //必选
+                height : 39//必选
+            }
+            var jsonStr = JSON.stringify(param)
+            var result = uexGaodeMap.setCustomButton(jsonStr);
+            alert("result:" + JSON.stringify(result));
+        }
+
+        function deleteButtons(type) {
+            if (type == 1) {
+                uexGaodeMap.deleteCustomButton("11");
+                uexGaodeMap.deleteCustomButton("13");
+            }
+            if (type == 2) {
+                uexGaodeMap.deleteCustomButton("12");
+                uexGaodeMap.deleteCustomButton("14");
+            }
+            var result = uexGaodeMap.deleteCustomButton("20");
+            alert("callback:" + JSON.stringify(result));
+        }
+
+        function showButtons(type) {
+            if (type == 1) {
+                var ids = ["11", "12", "20"];
+                var result = uexGaodeMap.showCustomButtons(JSON.stringify(ids));
+                alert("callback:" + JSON.stringify(result));
+            }
+            if (type == 2) {
+                var ids = ["13", "14", "20"];
+                var result = uexGaodeMap.showCustomButtons(JSON.stringify(ids));
+                alert("callback:" + JSON.stringify(result));
+            }
+        }
+
+        function hideButtons(type) {
+            if (type == 1) {
+                var ids = ["11", "13", "20"];
+                var result = uexGaodeMap.hideCustomButtons(JSON.stringify(ids));
+                alert("callback:" + JSON.stringify(result));
+            }
+            if (type == 2) {
+                var ids = ["12", "14", "20"];
+                var result = uexGaodeMap.hideCustomButtons(JSON.stringify(ids));
+                alert("callback:" + JSON.stringify(result));
+            }
+            if (type == 3) {
+                var result = uexGaodeMap.hideCustomButtons();
+                alert("callback:" + JSON.stringify(result));
+            }
+        }
+    </script>
+</html>

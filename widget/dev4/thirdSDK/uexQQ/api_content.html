@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+    </body>
+
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.remove("index");
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "login",
+            subTitle : "登录",
+            id : "1"
+        }, {
+            title : "isQQInstalled",
+            subTitle : "检查QQ是否已安装",
+            id : "2"
+        }, {
+            title : "getUserInfo",
+            subTitle : "获取用户信息",
+            id : "3"
+        }, {
+            title : "shareWebImgTextToQQ",
+            subTitle : "web图文分享",
+            id : "4"
+        }, {
+            title : "shareLocalImgToQQ",
+            subTitle : "纯图分享",
+            id : "5"
+        }, {
+            title : "shareAudioToQQ",
+            subTitle : "音乐分享",
+            id : "6"
+        }, {
+            title : "shareAppToQQ(仅安卓)",
+            subTitle : "应用分享",
+            id : "7"
+        }, {
+            title : "shareImgTextToQZone",
+            subTitle : "分享图文到QQ空间",
+            id : "8"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            switch(obj.id) {
+            case "1":
+                login()
+                break;
+            case "2":
+                isQQInstalled()
+                break;
+            case "3":
+                getUserInfo()
+                break;
+            case "4":
+                shareWebImgTextToQQ()
+                break;
+            case "5":
+                shareLocalImgToQQ()
+                break;
+            case "6":
+                shareAudioToQQ()
+                break;
+            case "7":
+                shareAppToQQ()
+                break;
+            case "8":
+                shareImgTextToQZone()
+                break;
+            }
+        })
+        var cText = 0;
+        var cJson = 1;
+        var cInt = 2;
+        var appId = "1104850791";
+        var commonCallback = function(data) {
+            alert("commonCallback:" + JSON.stringify(data));
+        };
+        function login() {
+            uexQQ.login(appId, commonCallback);
+        }
+
+        function isQQInstalled() {
+            var install = uexQQ.isQQInstalled();
+            if(install==true){
+                alert("已安装")
+            }else{
+                alert("未安装")
+            }
+            
+        }
+
+        function getUserInfo() {
+            uexQQ.getUserInfo(appId, commonCallback);
+        }
+
+        function shareWebImgTextToQQ() {
+            var json = '{"title":"图文分享标题","summary":"图文分享消息摘要","targetUrl":"http://appcan.cn","imageUrl":"res://aa.jpg","appName":"uexQQ", "cflag":"1"}';
+            uexQQ.shareWebImgTextToQQ(appId, json, commonCallback);
+        }
+
+        function shareLocalImgToQQ() {
+            var json = '{"imageLocalUrl":"res://aa.jpg","appName":"uexQQ"}';
+            uexQQ.shareLocalImgToQQ(appId, json, commonCallback);
+        }
+
+        function shareAudioToQQ() {
+            var json = '{"title":"音乐分享标题","summary":"音乐分享消息摘要","targetUrl":"http://appcan.cn","imageUrl":"http://imgcache.qq.com/qzone/space_item/pre/0/66768.gif","appName":"uexQQ", "audio_url":"http://pan.baidu.com/share/link?shareid=1055030794&uk=2337020227","cflag":"2"}';
+            uexQQ.shareAudioToQQ(appId, json, commonCallback);
+        }
+
+        function shareAppToQQ() {
+            var json = '{"title":"应用分享标题","summary":"应用分享消息摘要","imageUrl":"res://aa.jpg","appName":"uexQQ","cflag":"1"}';
+            uexQQ.shareAppToQQ(appId, json, commonCallback);
+        }
+
+        function shareImgTextToQZone() {
+            var json = '{"title":"空间分享标题","summary":"空间分享消息摘要","targetUrl":"http://appcan.cn","imageUrl":["res://aa.png", "res://aa.jpg", "res://bb.png"]}';
+            uexQQ.shareImgTextToQZone(appId, json, commonCallback);
+        }
+    </script>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/themes/pastie.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            .bc-bg {
+                background-color: #fff;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <pre><code data-language="javascript">appcan.ready(function() {
+    uexLocation.onChange = locationCallback;
+    uexWidgetOne.cbError = function(opCode, errorCode, errorInfo) {
+        alert("errorCode:" + errorCode + "\nerrorInfo:" + errorInfo);
+    }
+});
+
+var longitude = '';
+var latitude = '';
+
+//onChange的回调
+function locationCallback(lat, log) {
+    alert("经度:" + log + " ,纬度:" + lat);
+    longitude = log;
+    latitude = lat;
+}
+
+//获取当前经纬度
+function openLocation() {
+    //0最准确，1十米以内 ，2百米以内，3千米内，4三千米以内
+    var locLevel = 0;
+    //distanceFilter 更新距离，如果设置为 100m,则100m以内不回调定位
+    var distanceFilter = 10;
+    //以上两参数仅ios支持
+    uexLocation.openLocation(locLevel, distanceFilter, function(data) {
+        alert(data);
+    });
+}
+
+function getAddress() {
+    var callback = function(data) {
+        alert(data);
+    };
+    uexLocation.getAddress(latitude,longitude, 1, callback);
+}
+
+function convertLocation() {
+    var params = {
+        latitude : 30.453851,
+        longitude : 114.430494,
+        from : "gcj02",
+        to : "bd09"
+    };
+    var data = uexLocation.convertLocation(JSON.stringify(params));
+    alert(data);
+}
+
+function closeLocation(){
+    uexLocation.closeLocation()
+}</code></pre>
+    </body>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/rainbow.min.js"></script>
+    <script src="../../../js/javascript.js"></script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("single",1)
+        });
+
+        appcan.button(".play", "btn-act", function() {
+            appcan.window.closePopover("source")
+            // appcan.window.open("play","index.html");
+            // var titHeight = appcan.locStorage.val("titHeight");
+            // appcan.window.openPopover("scrawlIndex", "0", "index_content.html", '', 0, titHeight, '', '', '', '');
+            // appcan.window.publish("changeHeader", "play");
+        })
+
+    </script>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            span {
+                display: inline-block;
+                width: 100%;
+                font-size: 0.9em;
+                color: #333;
+                margin: 0.5em 0 !important;
+            }
+            input {
+                color: #999;
+                font-size: 0.8em !important;
+            }
+            span, input, .breakword {
+                padding-left: 1em !important;
+            }
+            .bc-border {
+                border-color: #f6f6f6;
+            }
+            .bc-btn {
+                margin: 1em;
+                font-size: 0.9em;
+                background: #2A89FF;
+            }
+            .first {
+                padding-top: 0.5em
+            }
+            #adre {
+                height: auto;
+                min-height: 4em;
+            }
+            #pay {
+                overflow-x: hidden;
+            }
+            /*body{padding-top: 2em !important;height: 100% !important}*/
+            .em {
+                height: 1em;
+                position: absolute;
+                z-index: -99999;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart style="background: #fff;">
+        <div class="em"></div>
+        <script src="../../../js/appcan.js"></script>
+        <script src="../../../js/appcan.control.js"></script>
+        <!-- <script src="../../../js/my.js"></script> -->
+    </body>
+    <script>
+        // appcan.ready(function() {
+        // })
+        // var em = $(".em").css("height");
+        // var num = Math.round(em.substring(0, 2) * 0.625)
+        // alert(num)
+        var width = screen.availWidth
+        var one = Math.round(width/10)
+        window.uexOnload = function() {
+            // uexWindow.setSlidingWindowEnabled(0);
+            uexListView.onItemClick = function(itemIndex) {
+                alert("onItemClick:" + itemIndex);
+            };
+            uexListView.onRightOptionButtonInItem = function(itemIndex, optionBtnIndex) {
+                alert("onRightOptionButtonInItem:" + itemIndex + "," + optionBtnIndex);
+            };
+            uexListView.ontPullRefreshHeaderListener = function(status) {
+                alert("ontPullRefreshHeaderListener:" + status);
+            };
+            uexListView.ontPullRefreshFooterListener = function(status) {
+                alert("ontPullRefreshFooterListener:" + status);
+            };
+
+            //
+            var index = appcan.locStorage.val("index");
+            switch(index) {
+            case "listview0":
+                setItems();
+                open()
+                break;
+            case "listview1":
+                setItemSwipeType();
+                setItems();
+                open()
+                break;
+            case "listview2":
+                setItemSwipeType();
+                setPullRefreshHeader();
+                setItems();
+                open()
+                break;
+            case "listview3":
+                setItemSwipeType();
+                setPullRefreshFooter();
+                setItems();
+                open()
+                break;
+            case "listview4":
+                setItems();
+                open()
+                break;
+            case "listview5":
+                setItems();
+                open();
+                insertItemAt()
+                break;
+            case "listview6":
+                setItems();
+                open();
+                appendItems()
+                break;
+            case "listview7":
+                setItems();
+                open();
+                appendItems();
+                deleteItemsAt()
+                break;
+            case "listview8":
+                setItems();
+                open();
+                reloadItems()
+                break;
+            case "listview9":
+                setItems();
+                open();
+                close()
+                break;
+            }
+        }
+        function setItems() {
+            var items = {
+                "listItems" : [{
+                    "image" : "res://Default.png",
+                    "title" : "标题1",
+                    "subtitle" : "子标题",
+                    "rightBtnImg" : "res://ac_title_btn_hov.png",
+                    "titleSize" : Math.round(one/2),
+                    "titleColor" : "#666666",
+                    "subtitleSize" : Math.round(one/3),
+                    "subtitleColor" : "#999999",
+                    "selectedBackgroundColor" : "#999999",
+                    "backgroundColor" : "#FFFFFF",
+                    "height" : Math.round(one*1.5)
+                },{
+                    "image" : "res://Default.png",
+                    "title" : "标题2",
+                    "subtitle" : "子标题",
+                    "rightBtnImg" : "res://ac_title_btn_hov.png",
+                    "titleSize" : Math.round(one/2),
+                    "titleColor" : "#666666",
+                    "subtitleSize" : Math.round(one/3),
+                    "subtitleColor" : "#999999",
+                    "selectedBackgroundColor" : "#999999",
+                    "backgroundColor" : "#FFFFFF",
+                    "height" : Math.round(one*1.5)
+                },{
+                    "image" : "res://Default.png",
+                    "title" : "标题3",
+                    "subtitle" : "子标题",
+                    "rightBtnImg" : "res://ac_title_btn_hov.png",
+                    "titleSize" : Math.round(one/2),
+                    "titleColor" : "#666666",
+                    "subtitleSize" : Math.round(one/3),
+                    "subtitleColor" : "#999999",
+                    "selectedBackgroundColor" : "#999999",
+                    "backgroundColor" : "#FFFFFF",
+                    "height" : Math.round(one*1.5)
+                }
+                ],
+                "rightSwipeOptionItem" : {
+                    "backgroundColor" : "#ffffff",
+                    "optionBtn" : [{
+                        "btnIndex" : "1",
+                        "text" : "分享",
+                        "textColor" : "#ffffff",
+                        "textSize" : 15,
+                        "bgColor" : "#999999"
+                    }, {
+                        "btnIndex" : "2",
+                        "text" : "删除",
+                        "textColor" : "#ffffff",
+                        "textSize" : 15,
+                        "bgColor" : "#ff0000"
+                    }]
+                },
+                "leftSwipeOptionItem" : {
+                    "backgroundColor" : "#ffffff",
+                    "optionBtn" : [{
+                        "btnIndex" : "1",
+                        "text" : "分享",
+                        "textColor" : "#ffffff",
+                        "textSize" : 10,
+                        "bgColor" : "#6F00D2"
+                    }, {
+                        "btnIndex" : "2",
+                        "text" : "删除",
+                        "textColor" : "#ffffff",
+                        "textSize" : 10,
+                        "bgColor" : "#6F00D2"
+                    }]
+                },
+            };
+            uexListView.setItems(JSON.stringify(items));
+        }
+
+        function setItemSwipeType() {
+            uexListView.setItemSwipeType(1);
+        }
+
+        function setPullRefreshHeader() {
+            var params = {
+                PullRefreshHeaderStyle : {
+                    // "arrowImage" : "res://1Normal.png",
+                    "backGroundColor" : "#e2e7ed",
+                    "textColor" : "#576c89",
+                    "textFontSize" : 20,
+                    "pullRefreshNormalText" : "下拉可以刷新",
+                    "pullRefreshPullingText" : "松开即可刷新",
+                    "pullRefreshLoadingText" : "加载中...",
+                    "isShowUpdateDate" : 1
+                }
+            };
+            uexListView.setPullRefreshHeader(JSON.stringify(params));
+        }
+
+        function setPullRefreshFooter() {
+            var params = {
+                PullRefreshFooterStyle : {
+                    // "arrowImage":"res://1Normal.png",
+                    "backGroundColor" : "#e2e7ed",
+                    "textColor" : "#576c89",
+                    "textFontSize" : 13,
+                    "pullRefreshNormalText" : "上拉加载更多",
+                    "pullRefreshPullingText" : "松开即可加载更多",
+                    "pullRefreshLoadingText" : "加载中...",
+                    "isShowUpdateDate" : 1
+                }
+            };
+            uexListView.setPullRefreshFooter(JSON.stringify(params));
+        }
+
+        function open() {
+            var width = window.screen.width;
+            var height = window.screen.height;
+            var top = appcan.locStorage.val("titHeight");
+            var params = {
+                "x" : 0,
+                "y" : top,
+                "w" : width,
+                "h" : height
+            };
+            uexListView.open(JSON.stringify(params));
+        }
+
+        function insertItemAt() {
+            var params = {
+                "itemIndex" : 1,
+                "listItem" : {
+                    "image" : "res://Default.png",
+                    "title" : "插入数据",
+                    "subtitle" : "子标题",
+                    "rightBtnImg" : "res://ac_title_btn_hov.png",
+                    "titleSize" : Math.round(one/2),
+                    "titleColor" : "#666666",
+                    "subtitleSize" : Math.round(one/3),
+                    "subtitleColor" : "#999999",
+                    "selectedBackgroundColor" : "#999999",
+                    "backgroundColor" : "#FFFFFF",
+                    "height" : Math.round(one*1.5)
+                }
+            };
+            uexListView.insertItemAt(JSON.stringify(params));
+        }
+
+        function appendItems() {
+            var params = {
+                "listItems" : [{
+                    "image" : "res://Default.png",
+                    "title" : "标题4",
+                    "subtitle" : "子标题",
+                    "rightBtnImg" : "res://ac_title_btn_hov.png",
+                    "titleSize" : Math.round(one/2),
+                    "titleColor" : "#666666",
+                    "subtitleSize" : Math.round(one/3),
+                    "subtitleColor" : "#999999",
+                    "selectedBackgroundColor" : "#999999",
+                    "backgroundColor" : "#FFFFFF",
+                    "height" : Math.round(one*1.5)
+                }, {
+                    "image" : "res://Default.png",
+                    "title" : "标题5",
+                    "subtitle" : "子标题",
+                    "rightBtnImg" : "res://ac_title_btn_hov.png",
+                    "titleSize" : Math.round(one/2),
+                    "titleColor" : "#666666",
+                    "subtitleSize" : Math.round(one/3),
+                    "subtitleColor" : "#999999",
+                    "selectedBackgroundColor" : "#999999",
+                    "backgroundColor" : "#FFFFFF",
+                    "height" : Math.round(one*1.5)
+                }, {
+                    "image" : "res://Default.png",
+                    "title" : "标题6",
+                    "subtitle" : "子标题",
+                    "rightBtnImg" : "res://ac_title_btn_hov.png",
+                    "titleSize" : Math.round(one/2),
+                    "titleColor" : "#666666",
+                    "subtitleSize" : Math.round(one/3),
+                    "subtitleColor" : "#999999",
+                    "selectedBackgroundColor" : "#999999",
+                    "backgroundColor" : "#FFFFFF",
+                    "height" : Math.round(one*1.5)
+                }]
+            };
+            uexListView.appendItems(JSON.stringify(params));
+        }
+
+        function deleteItemsAt() {
+            var params = {
+                "itemIndex" : [0, 1, 2]
+            };
+            uexListView.deleteItemsAt(JSON.stringify(params));
+        }
+
+        function reloadItems() {
+            var params = {
+                "listItems" : [{
+                    "image" : "res://Default.png",
+                    "title" : "新数据",
+                    "subtitle" : "子标题",
+                    "rightBtnImg" : "res://ac_title_btn_hov.png",
+                    "titleSize" : Math.round(one/2),
+                    "titleColor" : "#666666",
+                    "subtitleSize" : Math.round(one/3),
+                    "subtitleColor" : "#999999",
+                    "selectedBackgroundColor" : "#999999",
+                    "backgroundColor" : "#FFFFFF",
+                    "height" : Math.round(one*1.5)
+                }, {
+                    "image" : "res://Default.png",
+                    "title" : "新数据",
+                    "subtitle" : "子标题",
+                    "rightBtnImg" : "res://ac_title_btn_hov.png",
+                    "titleSize" : Math.round(one/2),
+                    "titleColor" : "#666666",
+                    "subtitleSize" : Math.round(one/3),
+                    "subtitleColor" : "#999999",
+                    "selectedBackgroundColor" : "#999999",
+                    "backgroundColor" : "#FFFFFF",
+                    "height" : Math.round(one*1.5)
+                }]
+            };
+            uexListView.reloadItems(JSON.stringify(params));
+        }
+
+        function close() {
+            uexListView.close("");
+        }
+
+    </script>
+</html>

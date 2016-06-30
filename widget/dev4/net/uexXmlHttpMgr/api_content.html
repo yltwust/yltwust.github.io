@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            .w {
+                font-size: 0.8em;
+                color: #A0A0A0;
+                white-space: normal;
+                word-break: break-all;
+                overflow: hidden;
+                Word-wrap: break-word;
+            }
+            /*.breakword {
+             white-space: normal;
+             word-break: break-all;
+             overflow: hidden;
+             Word-wrap: break-word;
+             }*/
+
+
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+        <br>
+        <div class="tcxx" id="percentage"></div>
+        
+    </body>
+
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.remove("index");
+            $(".lis").eq(0).after('<div id="adre" class=""></div>');
+            $(".lis").eq(1).after('<div id="adre1"></div><div id="adre2"></div>');
+            $(".lis").eq(2).after('<div id="adre3"></div>');
+
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "xmlHttpGet",
+            subTitle : "跨域异步请求：GET",
+            id : "1"
+        }, {
+            title : "xmlHttpPost",
+            subTitle : "跨域异步请求：POST",
+            id : "2"
+        }, {
+            title : "getCookie",
+            subTitle : "获取cookie",
+            id : "3"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            //直接根据标题来执行同名函数
+            var name = obj.title;
+            eval(name + "()");
+        })
+        function xmlHttpPost() {
+            // alert('xmlHttpPost');
+            var url = "http://192.168.1.57:45678/post";
+            uexXmlHttpMgr.open(2, "POST", url, "");
+            var v1 = "dfdsfdsdfsd";
+            var v2 = "fdsfdfsfsdf";
+            uexXmlHttpMgr.setPostData(2, "0", "field", v1);
+            uexXmlHttpMgr.setPostData(2, "0", "field2", v2);
+
+            uexXmlHttpMgr.setPostData(2, "1", "file", "res://1.mp4");
+            //uexXmlHttpMgr.setPostData(2, "1", "file1", "res://aa.jpg");
+
+            uexXmlHttpMgr.send(2, 0, function(state, resStr, resCode, resInfo) {
+                if (state == 1) {
+                    var state1 = "请求成功";
+                } else if (state == 0) {
+                    var state1 = "请求进行中";
+                } else {
+                    var state1 = "请求失败";
+                }
+                $('#adre1').html("<div class='w'>" + "<span>请求结果：</span>" + "<br/> 请求状态:" + state1 + "<br/> 服务器返回的文本数据:" + resStr + "<br/>http请求返回的状态码:" + resCode + "</div>");
+
+            }, function(inProgress) {
+                $('#adre2').html("<div class='w'>" + "<span>文件上传进度：</span>" + inProgress + "%</div>");
+
+            });
+
+        }
+
+        function xmlHttpGet() {
+            //alert('xmlHttpGet');
+            var url = "http://192.168.1.57:45678/get?key1=value1&key2=value2&arr[]=aaa&arr[]=bbb&arr[]=ccc";
+            uexXmlHttpMgr.open(1, "get", url, "");
+            uexXmlHttpMgr.setAppVerify(1, 1);
+            var headers = {
+                myhead : "zzzzzz"
+            }
+            uexXmlHttpMgr.setHeaders(1, JSON.stringify(headers));
+            uexXmlHttpMgr.send(1, 0, function(state, resStr, resCode, resInfo) {
+                if (state == 1) {
+                    var state1 = "请求成功";
+                } else if (state == 0) {
+                    var state1 = "请求进行中";
+                } else {
+                    var state1 = "请求失败";
+                }
+                $("#adre").html("<div class='w'>" + "<span>请求结果：</span>" + "<br> 请求状态:" + state1 + "<br> 服务器返回的文本数据:" + resStr + "<br/>http请求返回的状态码:" + resCode + "</div>");
+            });
+
+        }
+
+        getCookie = function() {
+            //alert('getCookie');
+            var result = uexXmlHttpMgr.getCookie("http://192.168.1.57");
+            //alert(result);
+            $('#adre3').html("<div class='w'>" + "<span>获取的cookie：</span>" + result + "</div>");
+        }
+
+    </script>
+</html>

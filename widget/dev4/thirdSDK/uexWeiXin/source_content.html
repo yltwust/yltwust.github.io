@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/themes/pastie.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            .bc-bg {
+                background-color: #fff;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <pre><code data-language="javascript">function registerApp() {
+var info = uexWeiXin.registerApp('wxbca95dc6752e0025');
+    if (info == 0) {
+        alert("授权成功")
+    } else {
+        alert("授权失败")
+    }
+}
+
+function isWXAppInstalled() {
+    var info = uexWeiXin.isWXAppInstalled()
+    if (info == 0) {
+        alert("已安装")
+    } else {
+        alert("未安装")
+    }
+}
+
+function openWXApp() {
+    uexWeiXin.openWXApp(function(data) {
+        if (data == 0) {
+            alert("打开成功")
+        } else {
+            alert("打开失败")
+        }
+    });
+}
+
+function isWXAppSupportApi() {
+    uexWeiXin.isWXAppSupportApi(function(data) {
+        if (data == 0) {
+            alert("支持")
+        } else {
+            alert("不支持")
+        }
+    })
+}
+
+function getApiVersion() {
+    uexWeiXin.getApiVersion(function(data) {
+        alert("callback:" + JSON.stringify(data));
+    });
+}
+
+function getWXAppInstallUrl() {
+    uexWeiXin.getWXAppInstallUrl(function(data) {
+        alert("callback:" + JSON.stringify(data));
+    });
+}
+
+function shareTextContent() {
+    var jsonstr = '{"text":"这是来自AppCan平台对微信支持测试","scene":1}';
+    uexWeiXin.shareTextContent(jsonstr, function(data) {
+        if (data == 0) {
+            alert("发送成功")
+        } else {
+            alert("发送失败")
+        }
+    });
+}
+
+function shareImageContent() {
+    var JsonData = '{"thumbImg":"res://icon.png","image":"res://Default.png","scene":1}';
+    uexWeiXin.shareImageContent(JsonData, function(data) {
+        if (data == 0) {
+            alert("发送成功")
+        } else {
+            alert("发送失败")
+        }
+    });
+}
+
+function shareLinkContent() {
+    var JsonData = '{"thumbImg":"res://icon.png","wedpageUrl":"http://www.appcan.cn","scene":1,"title":"你好,我是AppCan","description":"你好,我是AppCan描述"}';
+    uexWeiXin.shareLinkContent(JsonData, function(data) {
+        if (data == 0) {
+            alert("发送成功")
+        } else {
+            alert("发送失败")
+        }
+    });
+}
+
+function login() {
+    var params = {
+        scope : "snsapi_userinfo,snsapi_base",
+        state : "0902"
+    };
+    var data = JSON.stringify(params);
+    uexWeiXin.login(data, function(data) {
+        // alert("callback:" + JSON.stringify(data));
+        var code = data.errCode
+        if (code == 0) {
+            alert("登录成功")
+        } else if (code == -4) {
+            alert("用户拒绝授权")
+        } else if (code == -2) {
+            alert("用户取消")
+        }
+    });
+}
+
+function getLoginAccessToken() {
+    var params = {
+        secret : "APP_SECRET",
+        code : "CODE",
+        grant_type : "authorization_code"
+    };
+    var data = JSON.stringify(params);
+    uexWeiXin.getLoginAccessToken(data, function(data) {
+        alert("callback:" + JSON.stringify(data));
+    });
+}
+
+function getLoginRefreshAccessToken() {
+    var params = {
+        grant_type : "refresh_token",
+        refresh_token : "REFRESH_TOKEN"
+    };
+    var data = JSON.stringify(params);
+    uexWeiXin.getLoginRefreshAccessToken(data, function(data) {
+        alert("callback:" + JSON.stringify(data));
+    });
+}
+
+function getLoginCheckAccessToken() {
+    var params = {
+        access_token : "ACCESS_TOKEN",
+        openid : "OPENID"
+    };
+    var data = JSON.stringify(params);
+    uexWeiXin.getLoginCheckAccessToken(data, function(data) {
+        var code = data.errCode
+        if (code == 0) {
+            alert("有效")
+        } else {
+            alert("无效")
+        }
+    });
+}
+
+function getLoginUnionID() {
+    var params = {
+        access_token : "ACCESS_TOKEN",
+        openid : "OPENID"
+    };
+    var data = JSON.stringify(params);
+    uexWeiXin.getLoginUnionID(data, function(data) {
+        alert("callback:" + JSON.stringify(data));
+    });
+}
+
+function isSupportPay() {
+    uexWeiXin.isSupportPay(function(data) {
+        if (data == 0) {
+            alert("支持")
+        } else {
+            alert("不支持")
+        }
+    })
+}
+
+function getPrepayId() {
+    var param1 = {
+        appid : "wx5h8hdi9o2hs6gd0c5g",
+        mch_id : "1234567890",
+        device_info : "013467007045764",
+        nonce_str : "weradfdgdvccfexs1",
+        body : "appcan pay",
+        detail : "detail",
+        attach : "attach",
+        out_trade_no : "1217752501201406033233356018",
+        fee_type : "CNY",
+        total_fee : "1",
+        spbill_create_ip : "127.0.0.1",
+        time_start : "20150503152510",
+        time_expire : "20150703152510",
+        goods_tag : "WXG",
+        notify_url : "http://www.baidu.com/",
+        trade_type : "APP",
+        product_id : "12235413214070356458058",
+        openid : "oUpF8uMuAJO_M2pxb1Q9zNjWeS6o",
+        sign : "8FC5935C38628F44B924C838D760E33E"
+    };
+    var data1 = JSON.stringify(param1);
+    uexWeiXin.getPrepayId(data1, function(data) {
+        alert("callback:" + JSON.stringify(data));
+    });
+}
+
+function startPay() {
+    var param1 = {
+        appid : "wx5h8hdi9o2hs6gd0c5g",
+        partnerid : "1234567890",
+        prepayid : "wx201506031538433160984eee0861221810",
+        package : "Sign=WXPay",
+        noncestr : "weradfdgdvccfexs",
+        timestamp : "1412000000",
+        sign : "8FC5935C38628F44B924C838D760E33E"
+    };
+    var data1 = JSON.stringify(param1);
+    uexWeiXin.startPay(data1, function(data) {
+        alert("callback:" + JSON.stringify(data));
+    });
+}
+         </code></pre>
+    </body>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/rainbow.min.js"></script>
+    <script src="../../../js/javascript.js"></script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("single",1)
+        });
+
+        appcan.button(".play", "btn-act", function() {
+            appcan.window.closePopover("source")
+            // appcan.window.open("play","index.html");
+            // var titHeight = appcan.locStorage.val("titHeight");
+            // appcan.window.openPopover("scrawlIndex", "0", "index_content.html", '', 0, titHeight, '', '', '', '');
+            // appcan.window.publish("changeHeader", "play");
+        })
+
+    </script>
+</html>

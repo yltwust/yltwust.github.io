@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/themes/pastie.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            .bc-bg {
+                background-color: #fff;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <pre><code data-language="javascript">    appcan.ready(function() {
+            appcan.locStorage.val("single",0)
+            
+            $(".lis").eq(4).after("<div class='tcxx'><div id='onCommit'>onCommit:</div><div id='onCommitJson'>onCommitJson:</div><div id='onShareMenuItem'>onShareMenuItem：</div><div id='onVoiceAction'>onVoiceAction：</div><div id='onKeyBoardShow'>onKeyBoardShow：</div></div>");
+            appcan.locStorage.remove("index");
+              uexWidgetOne.cbError = function(opid,type,data){
+                alert(data);
+            }
+            uexChatKeyboard.onCommit = function(json){
+                $("#onCommit").html("onCommit:"+json);
+                //alert("onCommit:"+json);
+                uexChatKeyboard.hideKeyboard();
+            }
+            uexChatKeyboard.onCommitJson = function(json){
+                $("#onCommitJson").html("onCommitJson:"+json.emojiconsText);
+                //alert("onCommitJson:"+json.emojiconsText);
+                uexChatKeyboard.hideKeyboard();
+            }
+            uexChatKeyboard.onShareMenuItem = function(json){
+                $("#onShareMenuItem").html("onShareMenuItem:"+json);
+                //alert("onShareMenuItem "+json);
+                uexChatKeyboard.hideKeyboard();
+            }
+            uexChatKeyboard.onVoiceAction = function(json){
+                $("#onVoiceAction").html("onVoiceAction:"+json);
+                //alert(json);
+                uexChatKeyboard.hideKeyboard();
+            }
+
+            uexChatKeyboard.onKeyBoardShow = function(json){
+                $("#onKeyBoardShow").html("onKeyBoardShow:"+json);
+                //alert("onKeyBoardShow:"+json);
+                setTimeout(function (){window.scrollTo(0, document.body.scrollHeight);},20);
+            }
+        });
+        
+        appcan.button("#nav-left", "btn-act", function() {
+            appcan.window.close(-1);
+        })
+          var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "openChatKeyboard",
+            subTitle : "打开聊天输入",
+            id : "1"
+        }, {
+            title : "closeChatKeyboard",
+            subTitle : "关闭聊天输入",
+            id : "2"
+        }, {
+            title : "getHeight",
+            subTitle : "获取输入工具条高度",
+            id : "3"
+        }, {
+            title : "hideKeyboard",
+            subTitle : "收起键盘(在其他发送完成监听方法里面也有，可以不单独测)",
+            id : "4"
+        }, {
+            title : "changeWebViewFrame",
+            subTitle : "改变webview的高度以适应弹出的键盘(仅iOS)",
+            id : "5"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            //直接根据标题来执行同名函数
+            //alert(JSON.stringify(obj));
+            //alert(obj.id);
+            var name = obj.title;
+            eval(name + "()");
+        })
+       function openChatKeyboard(){
+            var jsonstr ={
+                emojicons:"res://emojicons/emojicons.xml",
+                shares:"res://shares/shares.xml",
+                placeHold:"请输入内容",
+                touchDownImg:"res://1.png",
+                dragOutsideImg:"res://2.png",
+                textColor:"#FFF",
+                textSize:"15.5",
+                sendBtnbgColorUp:"#45C01A",
+                sendBtnbgColorDown:"#298409",
+                sendBtnText:"发送",
+                //sendBtnTextSize:"15.5",
+                sendBtnTextColor:"#FFF",
+                inputMode:0
+        };
+            uexChatKeyboard.open(JSON.stringify(jsonstr));
+        }
+
+        function closeChatKeyboard(){
+            uexChatKeyboard.close();
+        }
+        function getHeight() {
+            var result=uexChatKeyboard.getInputBarHeight();
+            alert(result);
+        }
+        function changeWebViewFrame() {
+            uexChatKeyboard.changeWebViewFrame(400);
+            alert("改成了400");
+        }
+        </code></pre>
+    </body>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/rainbow.min.js"></script>
+    <script src="../../../js/javascript.js"></script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("single",1)
+        });
+
+        appcan.button(".play", "btn-act", function() {
+            appcan.window.closePopover("source")
+            // appcan.window.open("play","index.html");
+            // var titHeight = appcan.locStorage.val("titHeight");
+            // appcan.window.openPopover("scrawlIndex", "0", "index_content.html", '', 0, titHeight, '', '', '', '');
+            // appcan.window.publish("changeHeader", "play");
+        })
+
+    </script>
+</html>

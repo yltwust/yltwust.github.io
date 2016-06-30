@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            span {
+                display: inline-block;
+                width: 100%;
+                font-size: 0.9em;
+                color: #333;
+                margin: 0.5em 0 !important;
+            }
+            input {
+                color: #999;
+                font-size: 0.8em !important;
+            }
+            span, input,.breakword {
+                padding-left: 1em !important;
+            }
+            .bc-border {
+                border-color: #f6f6f6;
+            }
+            .bc-btn {
+                margin: 1em;
+                font-size: 0.9em;
+                background: #2A89FF;
+            }
+            .first {
+                padding-top: 0.5em
+            }
+            #adre{height: auto;min-height: 4em;}
+            #pay{overflow-x: hidden;}
+            /*body{padding-top: 2em !important;height: 100% !important}*/
+           
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart style="background: #fff;">
+        <div id="pay">
+            <span class="first">标题：</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="subject" value="珍珠项链">
+            </div>
+            <span>简介:</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="bodyy" value="韩版,韩国流行饰品小太阳花小巧雏菊 珍珠项链2M15。">
+            </div>
+            <span>总价:</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="fee" value="0.01">
+            </div>
+            <span>编号:</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="num" value="200155600">
+            </div>
+            <span>支付结果:</span>
+            <div class="ubb ubt bc-border c-wh tcxx breakword" id="adre"></div>
+            <div class="uin" onclick="pay();">
+                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc"  id="btn1" >
+                    点击购买
+                </div>
+            </div>
+        </div>
+        <script src="../../../js/appcan.js"></script>
+        <script src="../../../js/appcan.control.js"></script>
+        <!-- <script src="../../../js/my.js"></script> -->
+    </body>
+    <script>
+        // appcan.ready(function() {
+        // })
+        window.uexOnload = function(){
+            
+        }
+        var partner = "2088211417267818";
+        var seller = "78871900@qq.com";
+        var rsaPrivate = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKbw8KoSfMCmRFRvsSMRF0zsYTtAP6rF2XGpfAlvE/Y6vyJGNzIDOTCHTYCw28Un7XMz6grtRALVltXzzT7W45BSSINAYqmfWWiYGrZjgjWRdq15XHTDBY+Jfyy3Y+eRRwogTQjG7I0ke8mod6e/C4ey1ALExseqaSb/e+35fYQNAgMBAAECgYEAhN5lnedC9Y4f+lg/UxqqQeYtaRw00DXSYD215EhNSf/t2liqW5rnLLGzxMZ+1Id33OYn0/SN2fenqrf11prv2MgaxoBbcVWfr1IXsgnem/FAi3V6avoaixop56FXhasUkxjczlijlqB5kLS3cWZbPhVYhn4E3TszcjtLOsIe6D0CQQDRQnWcaXH/aFh/0g9gllG52F5yOXkEGPMLEc1h3hD9+SXn9QqnM50ZHJBarPo/FriVa2ZjTDHtb8WEILNu4pMrAkEAzDqyeJfP5DcQcwaJpRCaFReVeHhViG3z3Yq8vVprCS45ly3fSRddL4H8SGWwDEoB+OzkzwGb/E/bBFpKgAkJpwJAKOvmNAAq2td89wINH8ZFlSJK1euHTtXSMYf5sfnLON9QGlxBCRF+1zpOwGyzQ0MeNZobG6/604PYDE6YyEZmoQJBAL41lO84BUl593oKBryTn84xLucKvC7aqRwXEP4SbkoYoU6qTKGYfxO2Lq+G9dYcP4YFrH0X9J2kCkodhfGFeVUCQAXFkzIfRRui37Rjppjms7YfIvRNx4tJDmFHlFNTCWtplAKf7CGVQ/nsvyywjA+i+0vmaftUzoOdIcWnI8UEr9I=";
+        var rsaPublic = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
+
+        function setPayInfo() {
+            var notifyUrl = "www.123.com";
+            uexAliPay.setPayInfo(partner, seller, rsaPrivate, rsaPublic, notifyUrl);
+        }
+        
+        var commonCallback = function(status, msg) {
+            alert(status + "   " + msg);
+            document.getElementById('adre').innerHTML  = msg;
+        };
+
+        function pay() {
+            setPayInfo();
+            var subject = document.getElementById("subject").value;
+            var body = document.getElementById("bodyy").value;
+            var fee = document.getElementById("fee").value;
+            var num = document.getElementById("num").value;
+            uexAliPay.pay(num, subject, body, fee, commonCallback);
+        }
+    </script>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../css/ui-box.css">
+        <link rel="stylesheet" href="../../css/ui-base.css">
+        <link rel="stylesheet" href="../../css/ui-color.css">
+        <link rel="stylesheet" href="../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../thirdSDK/uexQupai/qupai/css/main.css">
+        <link rel="stylesheet" href="../../thirdSDK/uexQupai/css/lstyle.css">
+        <!-- <link rel="stylesheet" href="../../thirdSDK/uexQupai/css/index.css"> -->
+        <link rel="stylesheet" href="../../css/my.css">
+        
+        <style type="text/css">
+            .nav-btn img {
+                margin-top: 0.2em
+            }
+            #time {
+                color: #999;
+                font-size: 0.8em;
+                top: 0.3em
+            }
+            .img {
+                padding: 0;
+                margin: 0;
+            }
+            .nickname {
+                color: #333;
+            }
+            .title {
+                font-weight: normal;
+                color: #666
+            }
+            #dot{bottom: 4em;}
+        </style>
+    </head>
+    <body class="um-vp" ontouchstart style="background: #fff">
+        <div id="dot">
+            <img src="../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="page_0" class="up ub ub-ver bc-bg" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh bc-text-head ub" style="background: #2A89FF;color:#FAFDFF">
+                <div class="nav-btn" id="nav-left">
+                    <div class="fa fa-angle-left fa-2x"></div>
+                    <div class="text">
+                        返回
+                    </div>
+                </div>
+                <h1 class="ut ub-f1 ulev-3 ut-s tx-c" tabindex="0">open</h1>
+                <div class="nav-btn nav-bt" id="nav-right"></div>
+            </div>
+            <!--header结束--><!--content开始-->
+            <div id="content" class="ub-f1 tx-l ">
+        <div id="list" style="padding:0;margin:0;">
+            <!-- <video src="1.mp4" controls autoplay width="700" height="500"></video> -->
+            <div class="ub uinn" id="title">
+                <img name="avatar" src="../../extend/uexScrawl/images/5.jpg" alt="" />
+                <div id="" class="ub ub-ver ub-f1 umar2">
+                    <p class="nickname">
+                        小花同学
+                    </p>
+                    <h4 class="title"> 我又有新视频分享咯~~^.^</h4>
+                </div>
+                <div id="time">
+                    4/29  11:30
+                </div>
+            </div>
+            <div name="images" id="imgbg" class="ub video" style="padding:0;margin:0;">
+                <img src="../../extend/uexScrawl/images/5.jpg" class="img"/>
+                <img src="../../thirdSDK/uexQupai/css/img/play.png" class="playimg"  id="1" style="position: relative;" >
+            </div>
+        </div>
+            </div>
+
+            <!--content结束-->
+        </div>
+        <script src="../../js/jquery.1.7.2.min.js"></script>
+        <script src="../../js/jquery.event.ue.js.js"></script>
+        <script src="../../js/jquery.udraggable.js"></script>
+        <script>
+            var jq = $.noConflict();
+        </script>
+        <script src="../../js/appcan.js"></script>
+        <script src="../../js/appcan.control.js"></script>
+        <script src="../../js/my.js"></script>
+    </body>
+    <script>
+        var num = 0;
+        var w;
+        var tHeight;
+        var iHeight;
+        var pw,
+            ph,
+            p;
+    
+        appcan.ready(function() {
+            var header = appcan.locStorage.val("tabbarHeader");
+            $("#header h1").text(header)
+            var titHeight = $('#header').offset().height;
+            appcan.locStorage.val("titHeight",titHeight);
+            
+            tHeight = $('#title').offset().height;
+            w = screen.availWidth;
+            iHeight = parseInt(w * 3 / 4);
+            $("#imgbg").css("height", iHeight + "px");
+            $(".img").css("width", w + "px").css("height", iHeight + "px");
+            if (uexWidgetOne.platformName == "iOS") {
+                p = 50;
+                pw = w / 2 - 25;
+                ph = -(iHeight / 2 + 25);
+            } else {
+                p = 100;
+                pw = w / 2 - 50;
+                ph = -(iHeight / 2 + 50);
+            }
+            $("#1").css("width", p + "px").css("height", p + "px").css("top", ph + "px").css("left", pw + "px");
+        
+            var index = appcan.locStorage.val("index");
+            switch(index) {
+                case "tab0":createMenu()
+                    break;
+                case "tab1":createMenu();setItemChecked(3) 
+                    break;
+                case "tab2":createMenu();closeMenu()
+                    break;
+                }
+            window.onorientationchange = window.onresize = function() {
+                appcan.frame.resize("content", 0, titHeight);
+            }
+            appcan.window.subscribe("close", function() {
+                appcan.window.close(-1);
+            });
+            
+            uexTabBarWithPopMenu.onTabItemClick = tabItemCallback;
+            uexTabBarWithPopMenu.onPopMenuItemClick = popItemCallback;
+            var params = {
+                appKey : "207fc4bf069b548",
+                appSecret : "3821434e6903499a822ca16500586f0a",
+                space : "myqupai123"
+            }
+            uexQupai.init(JSON.stringify(params));
+            uexQupai.cbRecord = function(data) {
+                //alert(data);
+                var data = JSON.parse(data);
+                //alert(data.videoPath);
+                var path = data.videoPath;
+                var imgsrc = data.thumbPath;
+                // 安卓thumbnail
+                //alert(path);
+                //alert(imgsrc);
+                //$("#content").html(path+imgsrc);
+                appcan.locStorage.setVal("path", path);
+                appcan.locStorage.setVal("imgsrc", imgsrc);
+                //uexWindow.evaluatePopoverScript("","qupai","uexWindow.toast(0,5,'path',3000);");
+                // uexWindow.evaluatePopoverScript("", "qupai", "show()");
+                show()
+                // var titHeight = $('#header').offset().height;
+                // var footHeight = $('#foot').offset().height;
+                // var pageHeight=$('#page_0').offset().height;
+                // var Height=pageHeight-titHeight-footHeight;
+                // uexWindow.openPopover("qupai",0,"qupai_content.html","",0,titHeight,'',Height,'',0,0);
+                // uexWindow.bringPopoverToFront("qupai");
+            }
+            uexQupai.cbInit = function(data) {
+                // alert(data);
+                // if(data.status=="0"){
+                // uexWindow.toast(0,5,"插件初始化成功（仅调试，打包注释掉）",3000);
+                // }
+                // else{
+                // alert("初始化失败");
+                // }
+            }
+        });
+        
+        function close() {
+            uexVideo.closePlayer();
+            $(".playimg").removeClass("uhide");
+        }
+        appcan.button("#1", "btn-act", function() {
+            close();
+            $("#1").addClass("uhide");
+            var param = {
+                src : "res://1.mp4",
+                autoStart : true,
+                width : w,
+                height : iHeight,
+                x : 0,
+                y : tHeight,
+                scrollWithWeb : true
+            }
+            uexVideo.openPlayerForShortVideo(JSON.stringify(param));
+            //uexVideo.openPlayer(JSON.stringify(param));
+
+        })
+        function play(num) {
+            close();
+            $("#pi" + num).addClass("uhide");
+            var pHeight = (tHeight + iHeight) * num + tHeight;
+            var pathVideo = appcan.locStorage.val(num);
+            //alert(pathVideo);
+            var param = {
+                // src : "res://1.mp4",
+                src : pathVideo,
+                autoStart : true,
+                width : w,
+                height : iHeight,
+                x : 0,
+                y : pHeight,
+                scrollWithWeb : true
+            }
+            uexVideo.openPlayerForShortVideo(JSON.stringify(param));
+            //uexVideo.openPlayer(JSON.stringify(param));
+        }
+
+        function show() {
+            num += 1;
+            var path = appcan.locStorage.val('path');
+            var imgsrc = appcan.locStorage.val('imgsrc');
+            appcan.locStorage.setVal(num, path);
+            var myDate = new Date();
+            var month = myDate.getMonth() + 1;
+            var time = month + "/" + myDate.getDate() + "  " + myDate.getHours() + ":" + myDate.getMinutes();
+            var addString = '<div class="ub uinn" style="border-top:1px solid #cdcdcd;">' + '<img name="avatar" src="../../extend/uexScrawl/images/5.jpg" alt="" />' + '<div id="" class="ub ub-ver ub-f1 umar2">' + '<p class="nickname">' + '小花同学' + '</p>' + '<h4 class="title">我又有新视频分享咯~~^.^</h4>' + '</div><div id="time">' + time + '</div></div>' + '<div id="" name="images" class="ub video" style="height: ' + iHeight + 'px">' + '<img src="' + imgsrc + '"  class="img" />' + '<img src="css/img/play.png" class="playimg" id="pi' + num + '" onclick="play(' + num + ')" style="width:' + p + 'px;height:' + p + 'px;position: relative;top: ' + ph + 'px;left:' + pw + 'px" >' + '</div>';
+            $("#list").append(addString);
+            $(".img").css("width", w + "px").css("height", iHeight + "px");
+        }
+        
+        function createMenu() {
+            var params = {
+                // left:0,
+                // top:window.screen.height - 50,
+                // width:window.screen.width,
+                // height:50,
+                statusColor:"#ffffff",//"#EA7C24",
+                tab : {
+                    textSize : 10,
+                    textNColor : "#333333",
+                    textHColor : "#2a89ff",
+                    centerImg : "res://tabBar/plus.png",
+                    bgColor : "#f8f8f8",
+                    data : [{
+                        title : "动态",
+                        iconN : "res://tabBar/zone.png",
+                        iconH : "res://tabBar/zone-act.png"
+                    }, {
+                        title : "与我相关",
+                        iconN : "res://tabBar/me.png",
+                        iconH : "res://tabBar/me-act.png"
+                    }, {
+                        title : "我的空间",
+                        iconN : "res://tabBar/my.png",
+                        iconH : "res://tabBar/my-act.png"
+                    }, {
+                        title : "发现",
+                        iconN : "res://tabBar/find.png",
+                        iconH : "res://tabBar/find-act.png"
+                    }]
+                },
+                popMenu : {
+                    textSize : 13,
+                    textNColor : "#000000",
+                    textHColor : "#dddddd",
+                    bgColor : "#BBFFFFFF",
+                    bottomDistance : 300,
+                    data : [{
+                        title : "说说",
+                        iconN : "res://tabBar/pop1.png",
+                        iconH : "res://tabBar/pop1_1.png"
+                    }, {
+                        title : "照片",
+                        iconN : "res://tabBar/pop2.png",
+                        iconH : "res://tabBar/pop2_1.png"
+                    }, {
+                        title : "视频",
+                        iconN : "res://tabBar/pop3.png",
+                        iconH : "res://tabBar/pop3_1.png"
+                    }, {
+                        title : "直播",
+                        iconN : "res://tabBar/pop4.png",
+                        iconH : "res://tabBar/pop4_1.png"
+                    }, {
+                        title : "水印相机",
+                        iconN : "res://tabBar/pop5.png",
+                        iconH : "res://tabBar/pop5_1.png"
+                    }, {
+                        title : "签到",
+                        iconN : "res://tabBar/pop6.png",
+                        iconH : "res://tabBar/pop6_1.png"
+                    }, {
+                        title : "动感影集",
+                        iconN : "res://tabBar/pop7.png",
+                        iconH : "res://tabBar/pop7_1.png"
+                    }, {
+                        title : "日志",
+                        iconN : "res://tabBar/pop8.png",
+                        iconH : "res://tabBar/pop8_1.png"
+                    }]
+                }
+            }
+            uexTabBarWithPopMenu.open(JSON.stringify(params));
+            setItemChecked(0);
+        }
+
+        function setItemChecked(id) {
+            var param1 = {
+                index : id
+            };
+            var data1 = JSON.stringify(param1);
+            uexTabBarWithPopMenu.setItemChecked(data1);
+        }
+        function closeMenu(){
+          uexTabBarWithPopMenu.close();
+       }
+        function tabItemCallback(data){
+        alert("tabItemCallback:"+data);
+        setItemChecked(JSON.parse(data).index);
+        }
+        function popItemCallback(data){
+            alert("popItemCallback:"+data);
+            camera();
+        }
+    
+        function camera(){
+            // uexWindow.evaluatePopoverScript("", "qupai", "close()");
+            close();
+            var minDuration = appcan.locStorage.val('minDuration');
+            var maxDuration = appcan.locStorage.val('maxDuration');
+            //alert(minDuration);
+            if (minDuration == null) {
+                var minDuration = 1;
+            }
+            //alert(maxDuration);
+            if (maxDuration == null) {
+                var maxDuration = 20;
+            }
+            //alert(minDuration);
+            //alert(maxDuration);
+            var params = {
+                minDuration : minDuration,
+                maxDuration : maxDuration
+            }
+            uexQupai.config(JSON.stringify(params));
+            uexQupai.record();
+        }
+        
+        appcan.button("#nav-left", "btn-act", function() {
+                appcan.window.close(-1);
+            })
+    </script>
+</html>

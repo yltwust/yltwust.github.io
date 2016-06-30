@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            /*.indexbar{width: 3em;height: 25em;border: 1px solid #000;position: absolute;right: 1em;top:8em}*/
+            .block{width: 90%;height: 25em;border: none;position: absolute;left: 0em;top:8em;}
+            .em {
+                height: 1em;
+                position: absolute;
+                z-index: -99999;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+        </div>
+        <div id="listview"  class="ubt bc-border sc-bg"></div>
+        <div class="block"></div>
+        <div class="indexbar"></div>
+        <div class="em"></div>
+    </body>
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/appcan.listview.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            uexIndexBar.onTouchResult = function(opCode, dataType, data) {
+                alert(opCode + "," + dataType + "," + data);
+            }
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "open",
+            subTitle : "创建索引列表",
+        }, {
+            title : "close",
+            subTitle : "关闭索引列表",
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            var name = obj.title;
+            eval(name + "()");
+        })
+        
+        function open() {
+            // var w = Math.round(screen.availWidth / 2)
+            // var h = 600;
+            
+            // var x = Math.round(screen.availWidth / 2.2);
+            // var y = 200
+            var unit = Math.round(screen.availWidth / 10)
+            var top = $(".block").offset().top;
+            var em = $(".em").css("height");
+            var right = Math.round(em.substring(0, em.length-2))
+            var barWidth = right*3;
+            var barHeight = right*25;
+            
+            var x =$(".block").offset().width;
+            var y = top;
+            var w =right*3 ;//Math.round(screen.availWidth - x);
+            var h = $(".block").offset().height;
+            var data = {
+                textColor : "#2A89FF",
+                isScrollable : false
+            }
+            console.log("x:"+x+",y:"+y+",w:"+w+",h:"+h)
+            uexIndexBar.open(x, y, w, h,JSON.stringify(data));
+        }
+
+        function close() {
+            uexIndexBar.close()
+        }
+    </script>
+</html>

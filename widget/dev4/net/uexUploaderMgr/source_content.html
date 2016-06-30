@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/themes/pastie.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            .bc-bg {
+                background-color: #fff;
+            }
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <pre><code data-language="javascript">  const myUploaderID = "1";
+
+        appcan.ready(function() {
+            appcan.locStorage.remove("index");
+            $(".lis").eq(2).after("<div class='' id='percentage'></div>")
+        });
+
+        var lv = appcan.listview({
+            selector : "#listview",
+            type : "thinLine",
+            hasIcon : false,
+            hasAngle : true,
+            hasSubTitle : true,
+            multiLine : 1,
+        });
+        lv.set([{
+            title : "createUploader",
+            subTitle : "创建上传对象",
+            id : "1"
+        }, {
+            title : "setHeaders",
+            subTitle : "设置请求头",
+            id : "2"
+        }, {
+            title : "uploadFile",
+            subTitle : "上传文件",
+            id : "3"
+        }, {
+            title : "closeUploader",
+            subTitle : "关闭上传对象",
+            id : "4"
+        }])
+        lv.on("click", function(ele, obj, curEle) {
+            //直接根据标题来执行同名函数
+            var name = obj.title;
+            eval(name + "()");
+        })
+        function createUploader() {
+            var ext = {
+                type : +getRadioValue("uploaderType")
+            }
+            uexUploaderMgr.createUploader(myUploaderID, "http://te.3g2win.com/pidginimg/upload.php", JSON.stringify(ext));
+            alert("创建上传对象成功");
+        }
+
+        function setHeaders() {
+            var header = {
+                myHeaderKey : "myHeaderValue"
+            };
+            uexUploaderMgr.setHeaders(myUploaderID, JSON.stringify(header));
+            alert("设置请求头成功");
+        }
+
+        function uploadFile() {
+            uexUploaderMgr.uploadFile(myUploaderID, "res://aa.jpg", "myImage", getRadioValue("imageQuaility"), "400", function(fileSize, percent, response, status) {
+                switch (status) {
+                case 0:
+                $("#percentage").addClass('tcxx');
+                $("#percentage").html( "文件大小：" + fileSize + "<br>上传进度：" + percent + "%");
+                    //document.getElementById('percentage').innerHTML = "packageSize：" + fileSize + "<br>progress：" + percent + "%";
+                    break;
+
+                case 1:
+                    //alert("upload SUCCESS!");
+                    alert("上传成功!");
+                    uexUploaderMgr.closeUploader(myUploaderID);
+                    //alert(response);
+                    break;
+                case 2:
+                    //alert("upload FAILED!");
+                    alert("上传失败!");
+                    uexUploaderMgr.closeUploader(myUploaderID);
+                    break;
+
+                }
+
+            });
+        }
+
+        function closeUploader() {
+            var ret = uexUploaderMgr.closeUploader(1);
+            alert(ret);
+        }
+
+        var getRadioValue = function(name) {
+            var radios = document.getElementsByName(name);
+            var value;
+            for (var i = 0; i < radios.length; i++) {
+                var radio = radios[i];
+                if (radio.checked) {
+                    value = radio.value;
+                }
+            }
+            return value;
+
+        }       
+        </code></pre>
+    </body>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/rainbow.min.js"></script>
+    <script src="../../../js/javascript.js"></script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("single",1)
+        });
+
+        appcan.button(".play", "btn-act", function() {
+            appcan.window.closePopover("source")
+            // appcan.window.open("play","index.html");
+            // var titHeight = appcan.locStorage.val("titHeight");
+            // appcan.window.openPopover("scrawlIndex", "0", "index_content.html", '', 0, titHeight, '', '', '', '');
+            // appcan.window.publish("changeHeader", "play");
+        })
+
+    </script>
+</html>

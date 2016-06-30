@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/themes/pastie.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            .bc-bg {
+                background-color: #fff;
+            }
+
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart>
+        <div id="dot">
+            <img src="../../../css/res/common/btn-act.png"/>
+            <div class="menu ub">
+                <div class="play ub-f1">
+                    演示
+                </div><div class="line lineone"></div>
+                <div class="source ub-f1">
+                    源码
+                </div><div class="line linetwo"></div>
+                <div class="return ub-f1">
+                    返回
+                </div>
+                <div class="triangle-blue"></div>
+            </div>
+
+        </div>
+        <pre><code data-language="javascript">function openPicker() {
+    var data = {
+        min : 1,
+        max : 2,
+        quality : 0.8,
+        //usePng:true,
+        detailedInfo : true
+    }
+    var json = JSON.stringify(data);
+    uexImage.openPicker(json, function(info) {
+        if (info.isCancelled) {
+            alert("已取消");
+        } else {
+            alert(info.data);
+            if (info.detailedImageInfo) {
+                alert(JSON.stringify(info.detailedImageInfo));
+            }
+        }
+    });
+}
+
+function openBrowser() {
+    var data = {
+        displayActionButton : true,
+        displayNavArrows : true,
+        enableGrid : false,
+        //startOnGrid:true,
+        startIndex : 2,
+        data : ["res://photo1.jpg", {
+            src : "res://photo2.jpg",
+            thumb : "res://photo2t.jpg",
+        }, {
+            src : "res://photo3.jpg",
+            thumb : "res://photo3t.jpg",
+            desc : "22222222222222"
+        }, {
+            src : "http://bizhi.33lc.com/uploadfile/2014/0729/20140729112727686.jpg",
+            thumb : "res://photo4t.jpg",
+            desc : "22222222222222"
+        }]
+    }
+
+    var json = JSON.stringify(data);
+    uexImage.openBrowser(json, function() {
+        alert("浏览器关闭");
+    });
+}
+
+function openCropper() {
+    var data = {
+        src : "res://photo5.jpg",
+        mode : 2
+    }
+    var json = JSON.stringify(data);
+    uexImage.openCropper(json, function(info) {
+        if (info.isCancelled) {
+            alert("已取消");
+        } else {
+            alert(info.data);
+        }
+    });
+}
+
+function saveToPhotoAlbum() {
+    var data = {
+        localPath : "res://photo4.jpg"
+    };
+    var json = JSON.stringify(data);
+    uexImage.saveToPhotoAlbum(json, function(info) {
+        if (info.isSuccess) {
+            alert("储存成功!");
+        } else {
+            alert("储存失败:" + info.errorStr);
+        }
+    });
+
+}
+
+function clearOutputImages() {
+    var ret = uexImage.clearOutputImages();
+    if(ret){
+         alert("清除成功");
+    }else{
+        alert("清除失败")
+    }
+   
+}
+</code></pre>
+    </body>
+    <script src="../../../js/jquery.1.7.2.min.js"></script>
+    <script src="../../../js/jquery.event.ue.js.js"></script>
+    <script src="../../../js/jquery.udraggable.js"></script>
+    <script>
+        var jq = $.noConflict();
+    </script>
+    <script src="../../../js/rainbow.min.js"></script>
+    <script src="../../../js/javascript.js"></script>
+    <script src="../../../js/appcan.js"></script>
+    <script src="../../../js/appcan.control.js"></script>
+    <script src="../../../js/my.js"></script>
+    </body>
+    <script>
+        appcan.ready(function() {
+            appcan.locStorage.val("single", 1)
+        });
+
+        appcan.button(".play", "btn-act", function() {
+            appcan.window.closePopover("source")
+            appcan.locStorage.val("single", 0)
+            // appcan.window.open("play","index.html");
+            // var titHeight = appcan.locStorage.val("titHeight");
+            // appcan.window.openPopover("scrawlIndex", "0", "index_content.html", '', 0, titHeight, '', '', '', '');
+            // appcan.window.publish("changeHeader", "play");
+        })
+
+    </script>
+</html>

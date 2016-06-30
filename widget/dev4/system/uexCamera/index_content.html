@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../../../css/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="../../../css/ui-box.css">
+        <link rel="stylesheet" href="../../../css/ui-base.css">
+        <link rel="stylesheet" href="../../../css/ui-color.css">
+        <link rel="stylesheet" href="../../../css/appcan.icon.css">
+        <link rel="stylesheet" href="../../../css/appcan.control.css">
+        <link rel="stylesheet" href="../../../css/my.css">
+        <style type="text/css">
+            span {
+                display: inline-block;
+                width: 100%;
+                font-size: 0.9em;
+                color: #333;
+                margin: 0.5em 0 !important;
+            }
+            input {
+                color: #999;
+                font-size: 0.8em !important;
+            }
+            span, input {
+                padding-left: 1em !important;
+            }
+            .bc-border {
+                border-color: #f6f6f6;
+            }
+            .bc-btn {
+                margin: 1em;
+                font-size: 0.9em;
+                background: #2A89FF;
+            }
+            .first {
+                padding-top: 0.5em
+            }
+            /*body{padding-top: 2em !important;height: 100% !important}*/
+        </style>
+    </head>
+    <body class="um-vp bc-bg" ontouchstart style="background: #fff">
+        <div id="open" class="hide">
+            <span class="first">x坐标:</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="x" value="100">
+            </div>
+            <span>y坐标:</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="y" value="0">
+            </div>
+            <span>宽度:</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="w" value="200">
+            </div>
+            <span>高度:</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="h" value="350">
+            </div>
+            <span>提示语:</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="location" value="拍照">
+            </div>
+            <span>照片质量：</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="quality" value="100">
+            </div>
+            <div class="uin" onclick="openViewCamera();">
+                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc"  id="btn1" >
+                    修改自定义相机参数
+                </div>
+            </div>
+        </div>
+        <div id="flash" class="hide">
+            <span>改变闪光灯模式（可选0，1，2）</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="flashMode" value="0">
+            </div>
+            <div class="uin" onclick="changeFlashMode()">
+                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc"  id="btn2" >
+                    改变闪光灯模式
+                </div>
+            </div>
+        </div>
+        <div id="position" class="hide">
+            <span>改变摄像头位置（可选0，1）</span>
+            <div class="c-wh  ubt ubb bc-border uinput ub ub-f1">
+                <div class="umw1-7"></div>
+                <input type="text"  class="ub-f1 font-c" id="cameraPosition" value="0">
+            </div>
+            <div class="uin" onclick="changeCameraPosition()">
+                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc"  id="btn3" >
+                    改变摄像头位置
+                </div>
+            </div>
+        </div>
+        <div id="close">
+            <span>关闭自定义view相机</span>
+        <div class="uin" onclick="removeViewCameraFromWindow()">
+                <div class="ub btn bc-text-head bc-btn ub-ac ub-pc"  id="btn4" >
+                   关闭
+                </div>
+            </div>
+        </div>
+        <script src="../../../js/appcan.js"></script>
+        <script src="../../../js/appcan.control.js"></script>
+        <!-- <script src="../../../js/my.js"></script> -->
+    </body>
+    <script>
+        appcan.ready(function() {
+            var index = appcan.locStorage.val("index");
+            switch(index) {
+            case "camera2":
+                $("#open").removeClass("hide");
+                openViewCamera()
+                break;
+            case "camera3":
+                $("#open").removeClass("hide");
+                $("#flash").removeClass("hide");
+                openViewCamera();
+                break;
+            case "camera4":
+                $("#open").removeClass("hide");
+                $("#position").removeClass("hide");    
+                openViewCamera();
+                break;
+            case "camera5":
+                $("#close").removeClass("hide");
+                openViewCamera();
+                break;
+            }
+            uexWidgetOne.onMemoryWarning = function(isWarning, level) {
+                alert("warning");
+            };
+
+            uexWidgetOne.cbError = function(opCode, errorCode, errorInfo) {
+                alert("errorCode:" + errorCode + "\nerrorInfo:" + errorInfo);
+            }
+        })
+        var commonCallback = function(data) {
+            alert("commonCallBack:" + JSON.stringify(data));
+        };
+
+        //打开自定义相机View
+        function openViewCamera() {
+            uexCamera.removeViewCameraFromWindow()
+            var x = document.getElementById("x").value;
+            var y = document.getElementById("y").value;
+            var w = document.getElementById("w").value;
+            var h = document.getElementById("h").value;
+            var location = document.getElementById("location").value;
+            var quality = document.getElementById("quality").value;
+            //var quality = 100;
+            var index = appcan.locStorage.val("index");
+            uexCamera.openViewCamera(x, y, w, h, location, quality, commonCallback);
+        }
+
+        function changeFlashMode() {
+            var flashMode = document.getElementById("flashMode").value;
+            var mode = uexCamera.changeFlashMode(flashMode);
+            if(mode==0){
+                alert("更改成功")
+            }
+        }
+
+        function changeCameraPosition() {
+            var cameraPosition = document.getElementById("cameraPosition").value;
+            var mode = uexCamera.changeCameraPosition(cameraPosition)
+            if(mode==0){
+                alert("更改成功")
+            }
+        }
+
+        function removeViewCameraFromWindow() {
+            uexCamera.removeViewCameraFromWindow()
+        }
+    </script>
+</html>
